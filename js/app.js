@@ -164,6 +164,16 @@
     input.addEventListener('input',()=>{const result=model.validateLead($('#lead-name').value,$('#lead-phone').value);if(input.getAttribute('aria-invalid')==='true')setFieldError(input,result.errors[input.name]||'');$('#form-status').textContent='';});
   });
   const reduced=matchMedia('(prefers-reduced-motion: reduce)');
+  if(!reduced.matches&&matchMedia('(hover:hover) and (pointer:fine)').matches){
+    $$('.order-step').forEach(card=>{
+      let frame=0,point=null;
+      card.addEventListener('pointermove',event=>{
+        point={x:event.clientX,y:event.clientY};if(frame)return;
+        frame=requestAnimationFrame(()=>{frame=0;const box=card.getBoundingClientRect();const x=Math.max(0,Math.min(1,(point.x-box.left)/box.width)),y=Math.max(0,Math.min(1,(point.y-box.top)/box.height));card.style.setProperty('--tilt-x',((.5-y)*4).toFixed(2)+'deg');card.style.setProperty('--tilt-y',((x-.5)*4).toFixed(2)+'deg');card.style.setProperty('--light-x',(x*100).toFixed(1)+'%');card.style.setProperty('--light-y',(y*100).toFixed(1)+'%');});
+      });
+      card.addEventListener('pointerleave',()=>{if(frame)cancelAnimationFrame(frame);frame=0;card.style.setProperty('--tilt-x','0deg');card.style.setProperty('--tilt-y','0deg');});
+    });
+  }
   if('IntersectionObserver' in window&&!reduced.matches){
     const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('is-revealed');observer.unobserve(entry.target);}}),{threshold:.07});
     $$('[data-reveal]').forEach(el=>{el.classList.add('reveal-ready');observer.observe(el);});

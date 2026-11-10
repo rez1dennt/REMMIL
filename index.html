@@ -17,6 +17,7 @@
   <link rel="preload" href="assets/fonts/manrope-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="css/fonts.css">
   <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/ordering.css">
   <link rel="stylesheet" href="css/legal.css">
   <script defer src="js/model.js"></script>
   <script defer src="js/phone-mask.js"></script>
@@ -124,12 +125,34 @@
   </section>
 
   <section class="ordering" id="ordering" aria-labelledby="ordering-title">
-    <div class="container" data-reveal><h2 class="section-title" id="ordering-title">Как заказать</h2><ol class="order-steps"><li><span>01</span>Выберите материал</li><li><span>02</span>Уточните количество</li><li><span>03</span>Согласуйте получение</li></ol></div>
+    <div class="container">
+      <div class="order-journey" data-reveal>
+        <div class="order-heading"><div><p class="order-eyebrow">От выбора до получения</p><h2 class="section-title" id="ordering-title">Как заказать</h2></div><p class="order-intro">Состав, количество, получение. На каждом этапе можно уточнить детали у менеджера.</p></div>
+        <ol class="order-journey-list">
+          <li><a class="order-step" href="#catalog">
+            <span class="order-number" aria-hidden="true">01</span>
+            <div class="order-art order-art-material" aria-hidden="true"><span class="material-layer layer-bottom"></span><span class="material-layer layer-top"></span><img src="assets/b90.webp" width="760" height="760" alt=""></div>
+            <span class="order-route-dot" aria-hidden="true"></span><h3 id="order-step-title-1">Выберите материал</h3><p id="order-step-copy-1">Посмотрите составы, сравните фасовку и откройте характеристики.</p><span class="order-step-cta">К материалам <span aria-hidden="true">↗</span></span>
+          </a></li>
+          <li><a class="order-step" href="#callback">
+            <span class="order-number" aria-hidden="true">02</span>
+            <div class="order-art order-art-plan" aria-hidden="true"><span class="plan-sheet plan-sheet-back"></span><span class="plan-sheet plan-sheet-front"><span class="plan-room"></span><span class="plan-measure">м²</span><span class="plan-dimension"></span></span><span class="plan-swatch"></span></div>
+            <span class="order-route-dot" aria-hidden="true"></span><h3 id="order-step-title-2">Уточните количество</h3><p id="order-step-copy-2">Сообщите площадь и тип покрытия. Обсудим объём и комплектность.</p><span class="order-step-cta">Обсудить объём <span aria-hidden="true">↗</span></span>
+          </a></li>
+          <li><a class="order-step" href="#contacts">
+            <span class="order-number" aria-hidden="true">03</span>
+            <div class="order-art order-art-package" aria-hidden="true"><span class="package-ground"></span><svg class="package-box" viewBox="0 0 220 185" fill="none"><path d="m30 58 80-43 80 43-80 46Z" fill="#e3d9ca"/><path d="m30 58 80 46v69l-80-46Z" fill="#d5c6b2"/><path d="m110 104 80-46v69l-80 46Z" fill="#f8f5ef"/><path d="m30 58 80-43 80 43v69l-80 46-80-46V58Zm0 0 80 46m0 0 80-46m-80 46v69" stroke="#b7aea0" stroke-width="1.2"/><path d="m78 32 80 45v35l-20 11V88L58 43Z" fill="#3d6686"/><path d="m142 118 26-15v21l-26 15Z" fill="#e3edf0"/></svg><span class="package-label">REMMIL</span></div>
+            <span class="order-route-dot" aria-hidden="true"></span><h3 id="order-step-title-3">Согласуйте получение</h3><p id="order-step-copy-3">Уточните наличие, итоговую стоимость и способ получения материалов.</p><span class="order-step-cta">Связаться с менеджером <span aria-hidden="true">↗</span></span>
+          </a></li>
+        </ol>
+        <p class="order-bottom-note"><span aria-hidden="true"></span>Начните с материала. С остальным поможем разобраться.</p>
+      </div>
+    </div>
   </section>
 
   <section class="faq section" aria-label="Вопросы о материалах и заказе">
     <div class="container" data-reveal>
-      <div class="faq-item is-open"><h3><button aria-expanded="true" aria-controls="faq-answer-1" id="faq-question-1" type="button">Как выбрать состав?<span class="faq-plus" aria-hidden="true"></span></button></h3><div class="faq-panel" id="faq-answer-1" role="region" aria-labelledby="faq-question-1"><div class="faq-panel-inner"><p>Начните с типа покрытия и основания.</p></div></div></div>
+      <div class="faq-item"><h3><button aria-expanded="false" aria-controls="faq-answer-1" id="faq-question-1" type="button">Как выбрать состав?<span class="faq-plus" aria-hidden="true"></span></button></h3><div class="faq-panel" id="faq-answer-1" role="region" aria-labelledby="faq-question-1" aria-hidden="true"><div class="faq-panel-inner"><p>Начните с типа покрытия и основания.</p></div></div></div>
       <div class="faq-item"><h3><button aria-expanded="false" aria-controls="faq-answer-2" id="faq-question-2" type="button">Где найти технический лист?<span class="faq-plus" aria-hidden="true"></span></button></h3><div class="faq-panel" id="faq-answer-2" role="region" aria-labelledby="faq-question-2" aria-hidden="true"><div class="faq-panel-inner"><p>Документы находятся во вкладке «Сертификаты» выбранного товара. Пока файлы не добавлены, запросите технический лист у менеджера.</p></div></div></div>
       <div class="faq-item"><h3><button aria-expanded="false" aria-controls="faq-answer-3" id="faq-question-3" type="button">Как заказать?<span class="faq-plus" aria-hidden="true"></span></button></h3><div class="faq-panel" id="faq-answer-3" role="region" aria-labelledby="faq-question-3" aria-hidden="true"><div class="faq-panel-inner"><p>Выберите материал и свяжитесь с менеджером. Уточните количество, комплектность и условия получения.</p></div></div></div>
     </div>

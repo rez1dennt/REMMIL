@@ -44,6 +44,18 @@ test('FAQ and honest form states',async({page})=>{
   await page.locator('#lead-name').fill('Анна');await page.locator('#lead-phone').fill('+7 999 123 45 67');await page.locator('#lead-consent').check();await page.locator('#callback button[type=submit]').click();
   await expect(page.locator('#form-status')).toContainText('Заявка не отправлена');
 });
+test('FAQ starts fully closed and opens by keyboard',async({page})=>{
+  await page.goto('/');await expect(page.locator('.faq-item button[aria-expanded=true]')).toHaveCount(0);
+  for(const panel of await page.locator('.faq-panel').all())expect((await panel.boundingBox()).height).toBeLessThan(1);
+  await page.locator('#faq-question-1').focus();await page.keyboard.press('Enter');await expect(page.locator('#faq-question-1')).toHaveAttribute('aria-expanded','true');
+  await expect.poll(async()=>(await page.locator('#faq-answer-1').boundingBox()).height).toBeGreaterThan(10);
+  await page.keyboard.press('Enter');await expect(page.locator('#faq-question-1')).toHaveAttribute('aria-expanded','false');
+});
+test('ordering steps lead to their real page sections',async({page})=>{
+  await page.goto('/');await page.locator('.order-step[href="#catalog"]').click();
+  expect((await page.locator('#catalog').boundingBox()).y).toBeGreaterThanOrEqual(60);
+  await page.locator('.order-step[href="#callback"]').click();await expect(page.locator('#lead-phone')).toBeInViewport();
+});
 test('WCAG accessibility scan desktop and mobile',async({page})=>{
   for(const width of [1280,360]){await page.setViewportSize({width,height:900});await page.goto('/');const result=await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21a','wcag21aa']).analyze();expect(result.violations).toEqual([]);}
 });
