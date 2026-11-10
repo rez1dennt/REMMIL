@@ -1,0 +1,9 @@
+node_modules/
+qa/
+*.log
+.env
+.env.*
+!.env.example
+playwright-report/
+test-results/
+Thumbs.db

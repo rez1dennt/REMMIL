@@ -1,0 +1,17 @@
+Встроенный ImageGen, четыре отдельных актива сайта.
+
+hero
+Create ONLY the photorealistic interior photograph used in the TOP HERO of Image 1, as a clean high-resolution website photo asset, no webpage, no text, no logos, no UI. Wide landscape about 2000x900. Preserve the warm luxurious yet quiet cream neoclassical room, pale cream sofa on the left edge, lovely honey oak herringbone parquet floor, large sunlit windows on the right and depth through a doorway center-right. Camera low-medium height emphasizes the parquet. Soft natural sun and real wood grain, warm luminous cream walls, calm understated interior. Composition left third mostly pale cream wall/sofa suitable for text overlay added later; room and parquet extend across right two thirds. No people, no product containers, no decorations added, no words anywhere. Match the exact photograph mood and materials of top hero in the reference.
+References: C:/Users/bahti/Documents/Codex/2026-11-09/new-chat/outputs/remmil-v10-a-cream-denim.png
+
+mc90
+Precise background extraction / catalog product packshot. From Image 1 extract ONLY the upper white plastic REMMIL pail, MC-90 parquet adhesive, remove lower second bucket and all store background. Clean single front three-quarter view pail with lid and handle, photorealistic faithful white plastic, sky-blue wrap label, black REMMIL brand panel with blue geometric logo. Keep printed words faithful: REMMIL, КЛЕЙ ДЛЯ ПАРКЕТА, СИЛАНОВЫЙ МС-90, ОДНОКОМПОНЕНТНЫЙ, 10 кг. Restore cropped edges naturally. Genuine transparent background, no floor, no shadow outside silhouette, no text outside label. Product centered filling ~85% square canvas, whole pail including lid and base visible. Premium soft diffused studio light, clean label, preserve actual shape and design.
+References: C:/Users/bahti/AppData/Local/Temp/codex-clipboard-2b70e2b0-87cd-4b50-852d-8e2a136ed7d6.png
+
+b90
+Precise background extraction / catalog packshot of the exact single REMMIL white plastic pail in Image 1. Remove all shop floor and interior, genuine transparent background. Preserve faithful white pail shape/lid/handle and sky-blue label with dark REMMIL brand panel and blue mark. Front readable words: REMMIL, КЛЕЙ PUR-2R В-90, двухкомпонентный полиуретановый клей для паркета и инженерной доски, КОМПОНЕНТ А, 9 кг. The 9 kg is component A, do not change to 10. Soft studio light, whole clean bucket in a front three-quarter view. Square canvas, centered product fills85%, no scene/floor, no shadow outside silhouette, no additional text or props. High fidelity to source product.
+References: C:/Users/bahti/AppData/Local/Temp/codex-clipboard-1f9c489f-068c-45e6-ac39-d5295f0dac43.png
+
+primer
+Precise background extraction catalog packshot of exact REMMIL primer container in Image 1. SINGLE TALL RECTANGULAR WHITE METAL CAN with rounded corners and narrow dark top seam, NOT a bucket. Remove store background, genuine transparent alpha background. Faithful slightly three-quarter front view, entire can visible centeredfills85% square canvas. Original centered label: dark navy upper panel with REMMIL and blue geometric mark, blue lower panel with 1-КОМПОНЕНТНОЕ ПОЛИУРЕТАНОВОЕ ГРУНТ-ПОКРЫТИЕ and 5 КГ. Clean original white metal surface with subtle real reflections, soft studio lighting, keep label proportions/colors. No props, ground plane, shadows outside silhouette or text outside label.
+References: C:/Users/bahti/AppData/Local/Temp/codex-clipboard-4470ac95-2623-4e62-8b50-3efbfde867bb.png
