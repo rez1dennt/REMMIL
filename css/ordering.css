@@ -24,8 +24,6 @@
 .order-step h3 { position: relative; font-size: clamp(18px,1.6vw,22px); line-height: 1.35; letter-spacing: -.035em; font-weight: 600; color: var(--ink); }
 .order-step > p { position: relative; margin-top: var(--s-3); font-size: 13px; line-height: 1.75; max-width: 32ch; }
 .order-step-cta { position: relative; display: flex; gap: var(--s-3); align-items: center; justify-content: space-between; margin-top: auto; padding-top: var(--s-6); font-size: 12px; font-weight: 600; color: var(--accent); }
-.order-step-cta > span { font-size: 20px; line-height: 1; transition: transform var(--normal) var(--ease); }
-.order-step:hover .order-step-cta > span,.order-step:focus-visible .order-step-cta > span { transform: translate(3px,-3px); }
 .plan-sheet { position: absolute; width: 132px; height: 116px; left: calc(50% - 66px); top: 20px; border: 1px solid #c4d0d4; border-radius: 6px; background: #faf8f3; box-shadow: 0 9px 15px rgba(53,59,60,.07); transition: transform var(--slow) var(--ease); }
 .plan-sheet-back { transform: rotate(10deg) translate(8px,5px); background: #dbe7ea; }
 .plan-sheet-front { transform: rotate(-10deg); padding: 14px; background: repeating-linear-gradient(0deg,transparent 0 13px,rgba(61,102,134,.07) 13px 14px),repeating-linear-gradient(90deg,#faf8f3 0 13px,#e5ebeb 13px 14px); }
