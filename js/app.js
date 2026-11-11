@@ -23,8 +23,9 @@
   }
 
   function renderDocuments(product) {
-    const host = $('#documents');
+    const host = $('#product-documents');
     host.replaceChildren();
+    host.hidden = product.documents.length === 0;
     if (product.documents.length) {
       product.documents.forEach(file => {
         const link = document.createElement('a');
@@ -33,12 +34,6 @@
       });
       return;
     }
-    const icon = document.createElement('div'); icon.className = 'document-icon'; icon.setAttribute('aria-hidden','true');
-    icon.innerHTML = '<svg viewBox="0 0 68 88" fill="none"><path d="M8 2h35l22 22v59a3 3 0 0 1-3 3H8a4 4 0 0 1-4-4V6a4 4 0 0 1 4-4Z"/><path d="M43 2v22h22"/></svg><span>ОБРАЗЕЦ</span>';
-    const text = document.createElement('div');
-    const title = document.createElement('h4'); title.textContent = 'Сертификат соответствия';
-    const caption = document.createElement('p'); caption.textContent = 'Файл будет добавлен';
-    text.append(title,caption); host.append(icon,text);
   }
 
   function renderProduct(product, animate) {
