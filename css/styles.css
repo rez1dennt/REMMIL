@@ -31,7 +31,7 @@ button { border-radius: 0; }
 .skip-link { position: fixed; top: var(--s-2); left: var(--s-4); z-index: 100; transform: translateY(-160%); background: var(--accent); color: var(--light); padding: var(--s-3) var(--s-5); }
 .skip-link:focus { transform: translateY(0); }
 .wordmark { display: inline-flex; flex-shrink: 0; align-items: center; font-size: 24px; line-height: 1; font-weight: 600; letter-spacing: .25em; color: var(--ink); white-space: nowrap; }
-.wordmark img { width: auto; height: calc(var(--header-height) - var(--s-1)); border-radius: var(--s-1); }
+.wordmark img { width: auto; height: calc(var(--header-height) - var(--s-1)); }
 .site-header { position: fixed; inset: 0 0 auto; z-index: 50; height: var(--header-height); background: var(--page); }
 .header-inner { height: 100%; display: flex; align-items: center; gap: var(--s-8); position: relative; }
 .header-inner::after { content: ''; position: absolute; bottom: 0; left: var(--gutter); right: var(--gutter); height: 1px; background: var(--line); }

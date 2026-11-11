@@ -42,3 +42,15 @@ test('registered logo and document controls fit desktop, tablet and narrow scree
     }
   }
 });
+
+test('header and footer logos have transparent backgrounds including the gap inside the emblem',async({page})=>{
+  await page.goto('/');
+  for(const logo of await page.locator('.wordmark img').all()){
+    const alpha=await logo.evaluate(async img=>{
+      await img.decode();const canvas=document.createElement('canvas');canvas.width=625;canvas.height=460;
+      const ctx=canvas.getContext('2d');ctx.drawImage(img,0,0,625,460);
+      return [[0,0],[624,459],[312,45]].map(([x,y])=>ctx.getImageData(x,y,1,1).data[3]);
+    });
+    expect(alpha).toEqual([0,0,0]);
+  }
+});
