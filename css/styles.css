@@ -107,9 +107,20 @@ h1 { font-family: var(--font-serif); font-size: clamp(48px, 5.3vw, 78px); font-w
 .product-consumption h4 { font-size: var(--description-note-size); font-weight: 500; color: var(--text); }
 .product-consumption strong { display: block; margin-top: var(--s-2); font-size: var(--consumption-value-size); line-height: 1.25; color: var(--accent-hover); }
 .product-consumption p { margin-top: var(--s-3); font-size: var(--description-note-size); line-height: 1.6; white-space: pre-line; }
-.description-sections { display: grid; gap: var(--s-6); }
-.product-description-section h4 { margin-bottom: var(--s-2); font-size: var(--description-heading-size); font-weight: 600; line-height: 1.4; color: var(--ink); }
+.description-sections { border-top: 1px solid var(--line); }
+.product-description-section { border-bottom: 1px solid var(--line); }
+.product-description-section summary { cursor: pointer; list-style: none; padding-block: var(--s-4); }
+.product-description-section summary::-webkit-details-marker { display: none; }
+.product-description-section summary:hover h4 { color: var(--accent); }
+.product-description-section h4 { display: flex; align-items: center; justify-content: space-between; gap: var(--s-4); margin: 0; font-size: var(--description-heading-size); font-weight: 500; line-height: 1.4; color: var(--ink); }
+.description-symbol { position: relative; flex: 0 0 var(--s-4); width: var(--s-4); height: var(--s-4); color: var(--accent); }
+.description-symbol::before,.description-symbol::after { content: ''; position: absolute; background: currentColor; inset: 50% 0 auto; height: 1px; }
+.description-symbol::after { transform: rotate(90deg); transition: transform var(--normal) var(--ease); }
+.product-description-section[open] .description-symbol::after { transform: rotate(0); }
+.description-answer { padding-bottom: var(--s-5); }
 .product-description-section p { max-width: 64ch; font-size: var(--description-copy-size); line-height: 1.7; white-space: pre-line; }
+@supports (interpolate-size: allow-keywords) { .product-description-section { interpolate-size: allow-keywords; }.product-description-section::details-content { block-size: 0; overflow: clip; transition: block-size var(--normal) var(--ease),content-visibility var(--normal) allow-discrete; }.product-description-section[open]::details-content { block-size: auto; } }
+.form-trap { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); pointer-events: none; }
 .document-row { display: flex; gap: var(--s-7); align-items: center; min-height: 112px; }
 .document-row h4 { font-size: 21px; line-height: 1.25; color: var(--ink); }
 .document-row p { color: var(--muted); margin-top: var(--s-2); font-size: 16px; }

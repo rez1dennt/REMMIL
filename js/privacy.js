@@ -2,7 +2,8 @@
   'use strict';
   const config=window.REMMIL_LEGAL;
   if(!config)return;
-  if(config.siteUrl)document.querySelectorAll('[data-site-domain]').forEach(el=>el.textContent=config.siteUrl);
+  const hostedUrl=config.siteUrl||(/^https?:$/.test(location.protocol)&&!['localhost','127.0.0.1','::1'].includes(location.hostname)?location.origin:'');
+  if(hostedUrl)document.querySelectorAll('[data-site-domain]').forEach(el=>el.textContent=hostedUrl);
   const key='remmil_privacy_choice',days=180;
   function read(){try{const raw=localStorage.getItem(key);if(!raw)return null;const value=JSON.parse(raw);if(value&&value.version===config.version&&value.expiresAt>Date.now())return value;localStorage.removeItem(key);return null;}catch{try{localStorage.removeItem(key);}catch{}return null;}}
   const banner=document.createElement('section');banner.id='privacy-banner';banner.className='privacy-banner';banner.hidden=true;banner.setAttribute('role','region');banner.setAttribute('aria-label','Cookie и конфиденциальность');

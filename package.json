@@ -4,6 +4,9 @@
   "private": true,
   "description": "REMMIL — Основа прочных решений. HTML, CSS, JavaScript.",
   "scripts": {
+    "build": "node scripts/build.cjs",
+    "test:php": "node --test tests/php-backend.cjs",
+    "package:hosting": "node scripts/package-hosting.cjs",
     "start": "node scripts/serve.cjs",
     "test": "node --test tests/*.test.cjs",
     "test:browser": "playwright test"

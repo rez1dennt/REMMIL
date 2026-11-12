@@ -6,6 +6,8 @@ const types = {'.html':'text/html; charset=utf-8','.css':'text/css; charset=utf-
 const server = http.createServer((req,res)=>{
   let pathname;
   try { pathname = decodeURIComponent(new URL(req.url,'http://localhost').pathname); } catch {res.writeHead(400).end(); return;}
+  if(pathname==='/api/lead.php'){res.writeHead(503,{'Content-Type':'application/json; charset=utf-8','Cache-Control':'no-store'}).end(JSON.stringify({ok:false,error:'php_host_required'}));return;}
+  if(pathname.split('/').some(part=>part.startsWith('.'))||/^\/(private|node_modules|tests|scripts|docs|qa)(\/|$)/.test(pathname)){res.writeHead(404).end('Not found');return;}
   const file = path.resolve(root, '.' + (pathname === '/' ? '/index.html' : pathname));
   if (!file.startsWith(root + path.sep)) {res.writeHead(403).end(); return;}
   fs.readFile(file,(error,data)=>{ if(error){res.writeHead(404).end('Not found');return;} res.writeHead(200,{'Content-Type':types[path.extname(file)]||'application/octet-stream','Cache-Control':'no-cache'});res.end(data); });

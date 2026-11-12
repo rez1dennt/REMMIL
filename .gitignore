@@ -7,3 +7,5 @@ qa/
 playwright-report/
 test-results/
 Thumbs.db
+private/remmil-mail.php
+private/storage/

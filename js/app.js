@@ -44,10 +44,13 @@
     $('#consumption-notes').textContent = consumption ? consumption.notes : '';
     const host = $('#description-sections'); host.replaceChildren();
     (product.descriptionSections || []).forEach(item => {
-      const section = document.createElement('section'); section.className = 'product-description-section';
+      const section = document.createElement('details'); section.className = 'product-description-section';section.name='product-'+product.id+'-information';
+      const summary=document.createElement('summary'),symbol=document.createElement('span'),answer=document.createElement('div');
+      symbol.className='description-symbol';symbol.setAttribute('aria-hidden','true');answer.className='description-answer';
       const heading = document.createElement('h4'), text = document.createElement('p');
-      heading.textContent = item.title; text.textContent = item.text;
-      section.append(heading,text); host.append(section);
+      heading.textContent = item.title;heading.append(symbol);text.textContent = item.text;
+      summary.append(heading);answer.append(text);section.append(summary,answer);host.append(section);
+      section.addEventListener('toggle',()=>{if(section.open)host.querySelectorAll('details[open]').forEach(other=>{if(other!==section)other.open=false;});});
     });
   }
 
@@ -134,6 +137,13 @@
   $('.category-tabs').addEventListener('keydown',event=>tabKeyboard(event,$$('[data-category]'),b=>applyCategory(b.dataset.category,true)));
   $('.detail-tabs').addEventListener('keydown',event=>tabKeyboard(event,$$('[data-detail-tab]'),b=>activateTab(b.dataset.detailTab,true)));
   $$('[data-document-link]').forEach(link=>link.addEventListener('click',()=>activateTab('documents',false)));
+  function followDocumentHash(){
+    if(location.hash==='#documents'||location.hash==='#panel-documents'){
+      activateTab('documents',false);
+      requestAnimationFrame(()=>$('#documents').scrollIntoView({block:'start'}));
+    }
+  }
+  window.addEventListener('hashchange',followDocumentHash);followDocumentHash();
   $$('.faq-item button').forEach(button=>button.addEventListener('click',()=>{
     const item=button.closest('.faq-item'); const open=!item.classList.contains('is-open');
     item.classList.toggle('is-open',open); button.setAttribute('aria-expanded',String(open));
@@ -141,6 +151,7 @@
   }));
 
   const form=$('#callback');
+  let submission=null;
   window.RemmilPhoneMask($('#lead-phone'));
   function setFieldError(input,error){
     input.setAttribute('aria-invalid',String(Boolean(error)));
@@ -158,10 +169,15 @@
     if(!config.formEndpoint){status.textContent='Форма работает в режиме демонстрации. Заявка не отправлена.';return;}
     const button=form.querySelector('button'); button.disabled=true;form.setAttribute('aria-busy','true');status.textContent='Отправляем заявку…';
     try {
-      const response=await fetch(config.formEndpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:name.value.trim().replace(/\s+/g,' '),phone:model.phoneHref(phone.value).slice(4),product:selectedId,consent:{accepted:true,version:window.REMMIL_LEGAL.version,document:new URL('consent.html',location.href).href,acceptedAt:new Date().toISOString()}})});
-      if(!response.ok)throw new Error('Request failed');
-      status.textContent='Заявка отправлена. Менеджер свяжется с вами.';form.reset();
-    } catch {status.textContent='Не удалось отправить заявку. Попробуйте ещё раз или позвоните менеджеру.';}
+      const payload={name:name.value.trim().replace(/\s+/g,' '),phone:model.phoneHref(phone.value).slice(4),product:selectedId,website:form.elements.website.value,consent:{accepted:true,version:window.REMMIL_LEGAL.version,document:new URL('consent.html',location.href).href,acceptedAt:new Date().toISOString()}};
+      const fingerprint=JSON.stringify([payload.name,payload.phone,payload.product,payload.consent.version]);
+      if(!submission||submission.fingerprint!==fingerprint){const bytes=crypto.getRandomValues(new Uint8Array(16));bytes[6]=(bytes[6]&15)|64;bytes[8]=(bytes[8]&63)|128;const hex=Array.from(bytes,b=>b.toString(16).padStart(2,'0')).join('');submission={fingerprint,id:hex.slice(0,8)+'-'+hex.slice(8,12)+'-'+hex.slice(12,16)+'-'+hex.slice(16,20)+'-'+hex.slice(20)};}
+      payload.submissionId=submission.id;
+      const response=await fetch(config.formEndpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+      const result=await response.json();
+      if(!response.ok||result.ok!==true){const error=new Error('Request failed');error.status=response.status;throw error;}
+      status.textContent='Заявка отправлена. Менеджер свяжется с вами.';form.reset();submission=null;
+    } catch(error) {status.textContent=error.status===429?'Слишком много попыток. Подождите 15 минут или позвоните менеджеру.':'Заявка не отправлена. Попробуйте ещё раз или позвоните менеджеру.';}
     finally{button.disabled=false;form.removeAttribute('aria-busy');}
   });
   $('#lead-consent').addEventListener('change',()=>{const input=$('#lead-consent');input.setAttribute('aria-invalid',String(!input.checked));$('#consent-error').textContent=input.checked?'':'Подтвердите согласие перед отправкой.';});

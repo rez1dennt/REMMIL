@@ -1,0 +1,17 @@
+{
+  "consentVersion": "2026-11-12",
+  "products": {
+    "mc90": {
+      "name": "МС-90",
+      "packaging": "10 кг"
+    },
+    "b90": {
+      "name": "PUR-2R В-90",
+      "packaging": "Компонент А · 9 кг"
+    },
+    "primer": {
+      "name": "Полиуретановая грунтовка",
+      "packaging": "5 кг"
+    }
+  }
+}

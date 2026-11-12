@@ -3,7 +3,7 @@ window.REMMIL_CONTENT = {
   brand: 'REMMIL',
   phone: '+7 (968) 532-28-22',
   phoneIsDemo: false,
-  formEndpoint: '',
+  formEndpoint: 'api/lead.php',
   pricesAreDemo: false,
   products: [
     {

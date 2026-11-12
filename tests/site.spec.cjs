@@ -1,6 +1,6 @@
 const {test,expect}=require('@playwright/test');
 const AxeBuilder=require('@axe-core/playwright').default;
-test.beforeEach(async({page})=>{await page.addInitScript(()=>{try{localStorage.setItem('remmil_privacy_choice',JSON.stringify({version:'2026-11-10',remember:true,expiresAt:Date.now()+86400000}));}catch{}});});
+test.beforeEach(async({page})=>{await page.addInitScript(()=>{try{localStorage.setItem('remmil_privacy_choice',JSON.stringify({version:'2026-11-12',remember:true,expiresAt:Date.now()+86400000}));}catch{}});});
 for(const width of [1440,1280,1024,900,768,600,390,360,320]){
   test('layout and resources at '+width+'px',async({page})=>{
     const errors=[];page.on('pageerror',e=>errors.push(e.message));
@@ -35,6 +35,34 @@ test('expanded descriptions keep purpose, consumption, composition and applicati
   await expect(page.locator('#consumption-notes')).toContainText('Не более 250 г/м² на один слой');
   await page.locator('#tab-documents').click();await expect(page.locator('#panel-documents')).toBeVisible();
   await page.locator('#tab-description').click();await expect(page.locator('#consumption-value')).toHaveText('100–250 г/м²');
+});
+
+test('product information starts compact and disclosures remain usable with the certificate tab',async({page})=>{
+  await page.goto('/');
+  await expect(page.locator('#description-sections details')).toHaveCount(7);
+  await expect(page.locator('#description-sections details[open]')).toHaveCount(0);
+  const first=page.locator('#description-sections details').first();
+  await first.locator('summary').click();await expect(first).toHaveAttribute('open','');
+  const second=page.locator('#description-sections details').nth(1);await second.locator('summary').click();
+  await expect(second).toHaveAttribute('open','');await expect(first).not.toHaveAttribute('open','');
+  await page.locator('#tab-documents').click();await expect(page.locator('#panel-documents')).toBeVisible();await expect(page.locator('#panel-description')).toBeHidden();
+  await page.locator('#tab-description').click();await expect(page.locator('#product-consumption')).toBeVisible();
+  await page.locator('[data-product="mc90"]').click();await expect(page.locator('#description-sections details[open]')).toHaveCount(0);
+});
+
+test('page versions every local stylesheet and script to prevent stale asset combinations',async({page})=>{
+  await page.goto('/');
+  const urls=await page.locator('script[src],link[rel=stylesheet]').evaluateAll(items=>items.map(el=>el.getAttribute('src')||el.getAttribute('href')));
+  expect(urls.length).toBeGreaterThan(5);
+  const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto');
+  for(const url of urls){expect(url).toMatch(/\?v=[a-f0-9]{12}$/);const [asset,hash]=url.split('?v=');expect(hash).toBe(crypto.createHash('sha256').update(fs.readFileSync(path.join(__dirname,'..',asset))).digest('hex').slice(0,12));}
+});
+
+test('certificate deep links open the correct tab after navigating from another page',async({page})=>{
+  await page.goto('/privacy.html');await page.locator('.desktop-nav [data-document-link]').click();
+  await expect(page.locator('#tab-documents')).toHaveAttribute('aria-selected','true');
+  await expect(page.locator('#panel-documents')).toBeVisible();await expect(page.locator('#panel-description')).toBeHidden();
+  expect((await page.locator('#documents').boundingBox()).y).toBeGreaterThanOrEqual(60);
 });
 for(const width of [768,390,360,320]){
   test('menu preserves page geometry and scroll '+width,async({page})=>{
@@ -83,7 +111,7 @@ test('mobile comparison product names use the full card width',async({page})=>{
   const box=await page.locator('.comparison-table tbody th').first().boundingBox();expect(box.width).toBeGreaterThan(200);
 });
 test('an additional product from content is selectable without markup changes',async({page})=>{
-  await page.route('**/js/content.js',async route=>{const response=await route.fetch();const body=await response.text();await route.fulfill({response,body:body+'\nREMMIL_CONTENT.products.push({...REMMIL_CONTENT.products[0],id:"test-product",name:"Тестовая позиция"});'});});
+  await page.route('**/js/content.js*',async route=>{const response=await route.fetch();const body=await response.text();await route.fulfill({response,body:body+'\nREMMIL_CONTENT.products.push({...REMMIL_CONTENT.products[0],id:"test-product",name:"Тестовая позиция"});'});});
   await page.goto('/');await expect(page.locator('.product-card')).toHaveCount(4);await page.locator('[data-product="test-product"]').click();await expect(page.locator('#detail-title')).toHaveText('Тестовая позиция');
 });
 test('all local assets and fragment links resolve',async({page})=>{
