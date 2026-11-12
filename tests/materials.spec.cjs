@@ -33,7 +33,7 @@ test('registered logo and document controls fit desktop, tablet and narrow scree
     await page.setViewportSize({width,height:900});await page.goto('/');
     const logos=page.locator('.wordmark img');await expect(logos).toHaveCount(2);
     for(const logo of await logos.all())expect(await logo.evaluate(img=>img.complete&&img.naturalWidth>=600)).toBe(true);
-    const document=page.locator('.trademark-document');await document.scrollIntoViewIfNeeded();
+    await page.locator('#tab-documents').click();const document=page.locator('.trademark-document');await document.scrollIntoViewIfNeeded();
     expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
     const box=await document.boundingBox();
     for(const control of await document.locator('a').all()){

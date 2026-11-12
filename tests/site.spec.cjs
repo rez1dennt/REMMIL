@@ -17,10 +17,24 @@ test('category, product selection, inner tabs and keyboard navigation',async({pa
   await expect(page.locator('#detail-title')).toHaveText('Полиуретановая грунтовка');
   await page.locator('[data-category="adhesives"]').click();await expect(page.locator('.product-card:visible')).toHaveCount(2);
   await page.locator('[data-product="mc90"]').click();await expect(page.locator('#detail-title')).toHaveText('МС-90');
-  await page.locator('#tab-specifications').click();await expect(page.locator('#panel-specifications')).toBeVisible();
-  await expect(page.locator('#specifications-list')).toContainText('10 кг');
+  await expect(page.locator('#tab-specifications')).toHaveCount(0);await expect(page.locator('#panel-description')).toBeVisible();
+  await expect(page.locator('#product-consumption')).toContainText('900–1 400 г/м²');
+  await page.locator('#tab-description').focus();
   await page.keyboard.press('ArrowRight');await expect(page.locator('#tab-documents')).toBeFocused();await expect(page.locator('#panel-documents')).toBeVisible();
   await page.locator('[data-product="b90"]').click();await expect(page.locator('#detail-packaging')).toHaveText('Компонент А · 9 кг');
+});
+
+test('expanded descriptions keep purpose, consumption, composition and application specific to each product',async({page})=>{
+  await page.goto('/');await expect(page.locator('#tab-description')).toHaveAttribute('aria-selected','true');
+  for(const [id,consumption,composition] of [['mc90','900–1 400 г/м²','Гибридный предполимер'],['b90','800–1 300 г/м²','Гибридный полимер'],['primer','100–250 г/м²','Полиуретановая основа']]){
+    await page.locator('[data-product="'+id+'"]').click();
+    await expect(page.locator('#consumption-value')).toHaveText(consumption);
+    await expect(page.locator('#description-sections')).toContainText(composition);
+    for(const title of ['Для каких работ','Состав','Подготовка основания','Нанесение','Хранение'])await expect(page.locator('#description-sections').getByRole('heading',{name:title,exact:true})).toBeVisible();
+  }
+  await expect(page.locator('#consumption-notes')).toContainText('Не более 250 г/м² на один слой');
+  await page.locator('#tab-documents').click();await expect(page.locator('#panel-documents')).toBeVisible();
+  await page.locator('#tab-description').click();await expect(page.locator('#consumption-value')).toHaveText('100–250 г/м²');
 });
 for(const width of [768,390,360,320]){
   test('menu preserves page geometry and scroll '+width,async({page})=>{

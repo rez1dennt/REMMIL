@@ -8,7 +8,7 @@
   const $$ = selector => Array.from(document.querySelectorAll(selector));
   let selectedId = 'b90';
   let category = 'all';
-  let currentTab = 'documents';
+  let currentTab = 'description';
   const detail = $('#product-detail');
 
   function activateTab(key, focus) {
@@ -36,6 +36,21 @@
     }
   }
 
+  function renderDescription(product) {
+    $('#product-description-text').textContent = product.details;
+    const consumption = product.consumption;
+    $('#product-consumption').hidden = !consumption;
+    $('#consumption-value').textContent = consumption ? consumption.value : '';
+    $('#consumption-notes').textContent = consumption ? consumption.notes : '';
+    const host = $('#description-sections'); host.replaceChildren();
+    (product.descriptionSections || []).forEach(item => {
+      const section = document.createElement('section'); section.className = 'product-description-section';
+      const heading = document.createElement('h4'), text = document.createElement('p');
+      heading.textContent = item.title; text.textContent = item.text;
+      section.append(heading,text); host.append(section);
+    });
+  }
+
   function renderProduct(product, animate) {
     if (!product) return;
     selectedId = product.id;
@@ -49,12 +64,7 @@
     $('#detail-price').textContent = model.formatPrice(product.price);
     $('#detail-image').src = product.image;
     $('#detail-image').alt = 'REMMIL ' + product.name + ', ' + product.packaging;
-    $('#product-description-text').textContent = product.details;
-    const specs = $('#specifications-list'); specs.replaceChildren();
-    product.specs.forEach(([key,value])=>{
-      const row = document.createElement('div'), term = document.createElement('dt'), description = document.createElement('dd');
-      term.textContent = key; description.textContent = value; row.append(term,description); specs.append(row);
-    });
+    renderDescription(product);
     renderDocuments(product);
     if (animate) {
       detail.classList.remove('detail-changing'); void detail.offsetWidth; detail.classList.add('detail-changing');
