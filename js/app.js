@@ -104,7 +104,8 @@
   });
   renderProduct(model.selectProduct(products,selectedId),false);
   $('.demo-caption').textContent=config.pricesAreDemo?(config.phoneIsDemo?'Цены и телефон указаны для примера.':'Цены указаны для примера.'):(config.phoneIsDemo?'Телефон указан для примера.':'');
-  if(!config.pricesAreDemo) $$('.price-caption').forEach(el=>el.textContent='');
+  $('.demo-caption').hidden=!$('.demo-caption').textContent;
+  $$('.price-caption').forEach(el=>{el.hidden=!config.pricesAreDemo;el.textContent=config.pricesAreDemo?'Пример цены':'';});
   $$('[data-phone]').forEach(link=>{
     const span = link.querySelector('span'); if(span) span.textContent=config.phone; else link.textContent=config.phone;
     link.href=config.phoneIsDemo?'#callback':model.phoneHref(config.phone);
