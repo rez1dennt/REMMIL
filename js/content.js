@@ -51,8 +51,7 @@ window.REMMIL_CONTENT = {
       "brand": "Berger-Seidle",
       "category": "adhesives",
       "name": "BergerBond M1X",
-      "image": "assets/bergerbond-m1x.webp",
-      "photo": true,
+      "image": "assets/bergerbond-m1x-cutout.webp",
       "short": "Однокомпонентный SMP · 21 кг",
       "price": null,
       "description": "Однокомпонентный SMP-клей для паркетной и инженерной доски",
@@ -67,10 +66,9 @@ window.REMMIL_CONTENT = {
       },
       "gallery": [
         {
-          "src": "assets/bergerbond-m1x.webp",
+          "src": "assets/bergerbond-m1x-cutout.webp",
           "label": "Коробка · 21 кг",
-          "alt": "BergerBond M1X, коробка 21 кг: 3 пакета по 7 кг",
-          "photo": true
+          "alt": "BergerBond M1X, коробка 21 кг: 3 пакета по 7 кг"
         },
         {
           "src": "assets/bergerbond-m1x-inside.webp",

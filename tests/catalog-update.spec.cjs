@@ -21,6 +21,13 @@ test('M1X has no price, factual description, actual inner packaging and its own 
   await page.goto('/');await page.locator('[data-product="berger-m1x"]').click();
   await expect(page.locator('#detail-title')).toHaveText('BergerBond M1X');
   await expect(page.locator('#detail-packaging')).toHaveText('21 кг · 3 пакета по 7 кг');
+  for(const photo of [page.locator('[data-product="berger-m1x"] img'),page.locator('#detail-image'),page.locator('#product-gallery img').first()]){
+    const image=await photo.evaluate(async img=>{
+      await img.decode();const canvas=document.createElement('canvas');canvas.width=img.naturalWidth;canvas.height=img.naturalHeight;const ctx=canvas.getContext('2d');ctx.drawImage(img,0,0);
+      return {fit:getComputedStyle(img).objectFit,alpha:[[0,0],[canvas.width-1,0],[0,canvas.height-1],[canvas.width-1,canvas.height-1]].map(([x,y])=>ctx.getImageData(x,y,1,1).data[3])};
+    });
+    expect(image.alpha).toEqual([0,0,0,0]);expect(image.fit).toBe('contain');
+  }
   await expect(page.locator('#detail-price')).toBeHidden();
   await expect(page.locator('[data-product="berger-m1x"] .card-price')).toBeHidden();
   await expect(page.locator('#product-detail')).not.toContainText('Цена по запросу');
@@ -43,6 +50,6 @@ for(const width of [1280,768,360,320])test('updated catalogue and manager at '+w
   await page.locator('[data-product="berger-m1x"]').click();
   await expect(page.locator('.manager a')).toBeVisible();
   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
-  const images=await page.locator('#product-detail img').evaluateAll(images=>images.filter(i=>!i.complete||!i.naturalWidth).map(i=>i.src));
-  expect(images).toEqual([]);
+  await page.locator('#product-detail').scrollIntoViewIfNeeded();
+  await expect.poll(()=>page.locator('#product-detail img').evaluateAll(images=>images.filter(i=>!i.complete||!i.naturalWidth).map(i=>i.src))).toEqual([]);
 });

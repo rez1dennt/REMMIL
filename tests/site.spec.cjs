@@ -6,6 +6,7 @@ for(const width of [1440,1280,1024,900,768,600,390,360,320]){
     const errors=[];page.on('pageerror',e=>errors.push(e.message));
     await page.setViewportSize({width,height:900});await page.goto('/');await page.evaluate(()=>document.fonts.ready);
     await expect(page.locator('h1')).toHaveText('Основапрочных решений');
+    await page.locator('img').evaluateAll(images=>Promise.all(images.map(img=>{img.loading='eager';return img.decode().catch(()=>null);})));
     const layout=await page.evaluate(()=>({overflow:document.documentElement.scrollWidth>innerWidth,broken:[...document.images].filter(i=>!i.complete||!i.naturalWidth).map(i=>i.src),headerPosition:getComputedStyle(document.querySelector('header')).position}));
     expect(layout.overflow).toBe(false);expect(layout.broken).toEqual([]);expect(layout.headerPosition).toBe('fixed');expect(errors).toEqual([]);
     await page.screenshot({path:'qa/viewport-'+width+'.png',fullPage:true});
