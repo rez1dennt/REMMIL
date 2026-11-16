@@ -4,7 +4,18 @@ const root=path.resolve(__dirname,'..'),sandbox={window:{}};
 vm.runInNewContext(fs.readFileSync(path.join(root,'js/content.js'),'utf8'),sandbox);
 const content=sandbox.window.REMMIL_CONTENT,product=content.products.find(p=>p.id==='b90');
 const esc=value=>String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const model=require('../js/model.js');
 let html=fs.readFileSync(path.join(root,'index.html'),'utf8');
+const cards=content.products.map(p=>{
+  const selected=p.id===product.id,price=model.formatPrice(p.price);
+  return '<button class="product-card'+(selected?' is-selected':'')+'" type="button" data-product="'+esc(p.id)+'" aria-pressed="'+selected+'"><span class="card-image"><img'+(p.photo?' class="is-photo"':'')+' src="'+esc(p.image)+'" alt="'+esc((p.brand||content.brand)+' '+p.name+', '+p.packaging)+'" width="760" height="760" loading="lazy"></span><span class="card-info"><strong class="card-name">'+esc(p.name)+'</strong><span class="card-description">'+esc(p.short)+'</span><span class="card-price"'+(price?'':' hidden')+'>'+esc(price)+'</span></span><span class="selected-badge">Выбрано</span></button>';
+}).join('\n');
+html=html.replace(/<div class="product-grid[^\"]*" id="product-list"[^>]*>[\s\S]*?<\/div>(\s*<p class="sr-only" id="catalog-announcement")/,'<div class="product-grid'+(content.products.length===4?' is-paired':'')+'" id="product-list" role="tabpanel" aria-labelledby="category-all" data-reveal>\n'+cards+'\n</div>$1');
+html=html.replace(/(<strong id="detail-packaging">)[\s\S]*?(<\/strong>)/,'$1'+esc(product.packaging)+'$2');
+const gallery=(product.gallery||[]).map(photo=>'<a class="gallery-choice" href="'+esc(photo.src)+'" target="_blank" rel="noopener"><img'+(photo.photo?' class="is-photo"':'')+' src="'+esc(photo.src)+'" width="80" height="80" alt=""><span>'+esc(photo.label)+'</span></a>').join('');
+html=html.replace(/(<div class="product-gallery" id="product-gallery"[^>]*>)[\s\S]*?<\/div>/,'$1'+gallery+'</div>');
+const rows=content.products.map(p=>'<tr>'+[p.comparisonName||p.name,p.comparisonPurpose,p.composition,p.comparisonPackaging||p.packaging].map((value,i)=>i===0?'<th scope="row">'+esc(value)+'</th>':'<td data-label="'+['','Назначение','Состав','Фасовка'][i]+'">'+esc(value)+'</td>').join('')+'</tr>').join('\n');
+html=html.replace(/(<tbody id="comparison-body">)[\s\S]*?(<\/tbody>)/,'$1\n'+rows+'\n$2');
 const start=html.indexOf('<div class="description-sections" id="description-sections">');
 const end=html.indexOf('\n            </div>\n            <div class="detail-panel" id="panel-documents"',start);
 if(start<0||end<0)throw Error('Product description boundary not found');

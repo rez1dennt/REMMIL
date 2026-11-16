@@ -39,7 +39,9 @@ npm start
 - `category` — `adhesives` или `primers`;
 - `name`, `short`, `description`, `details` — название и тексты;
 - `image` — путь к изображению;
-- `price` — число, рубли;
+- `price` — число в рублях; `null` полностью скрывает цену;
+- `brand` — бренд товара, по умолчанию REMMIL;
+- `gallery` — дополнительные фотографии `{src, label, alt, photo}`; `photo: true` включает квадратное кадрирование исходного снимка;
 - `packaging` — подпись фасовки;
 - `consumption` — объект `{ value, notes }`: расход материала и условия, влияющие на него;
 - `descriptionSections` — массив `{ title, text }`: назначение, состав, подготовка основания, нанесение и хранение;

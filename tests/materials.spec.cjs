@@ -6,7 +6,7 @@ test.beforeEach(async({page})=>{
   await page.addInitScript(()=>localStorage.setItem('remmil_privacy_choice',JSON.stringify({version:'2026-11-12',remember:true,expiresAt:Date.now()+86400000})));
 });
 
-test('brand document remains available for every product with a readable preview and original PDF',async({page})=>{
+test('brand document remains available for every REMMIL product with a readable preview and original PDF',async({page})=>{
   await page.goto('/');
   for(const product of ['mc90','b90','primer']){
     await page.locator('[data-product="'+product+'"]').click();

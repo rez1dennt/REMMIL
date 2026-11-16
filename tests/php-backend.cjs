@@ -51,9 +51,9 @@ test('expired consent records are removed',async()=>{const record=path.join(priv
 test('the browser form sends through PHP to the local SMTP fixture',async()=>{
  const {chromium,expect}=require('@playwright/test'),browser=await chromium.launch({channel:'chrome',headless:true});
  try{const page=await browser.newPage({reducedMotion:'reduce'});await page.addInitScript(()=>localStorage.setItem('remmil_privacy_choice',JSON.stringify({version:'2026-11-12',remember:true,expiresAt:Date.now()+86400000})));await page.goto(base+'/');
- await page.locator('[data-product="mc90"]').click();await page.locator('#lead-name').fill('Тестовая Заявка');await page.locator('#lead-phone').fill('9991234567');
+ await page.locator('[data-product="berger-m1x"]').click();await page.locator('#lead-name').fill('Тестовая Заявка');await page.locator('#lead-phone').fill('9991234567');
  const count=messages.length;await page.locator('#callback button[type=submit]').click();await expect(page.locator('#consent-error')).toContainText('Подтвердите');assert.equal(messages.length,count);
  await page.locator('#lead-consent').check();await page.locator('#callback button[type=submit]').click();await expect(page.locator('#form-status')).toContainText('Заявка отправлена');assert.equal(messages.length,count+1);
- const mime=messages.at(-1),body=Buffer.from(mime.slice(mime.indexOf('\r\n\r\n')+4).replace(/\s/g,''),'base64').toString('utf8');assert.match(body,/МС-90/);assert.match(body,/Тестовая Заявка/);
+ const mime=messages.at(-1),body=Buffer.from(mime.slice(mime.indexOf('\r\n\r\n')+4).replace(/\s/g,''),'base64').toString('utf8');assert.match(body,/BergerBond M1X/);assert.match(body,/21 кг/);assert.match(body,/Тестовая Заявка/);
  }finally{await browser.close();}
 });

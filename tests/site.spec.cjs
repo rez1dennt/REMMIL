@@ -15,18 +15,18 @@ test('category, product selection, inner tabs and keyboard navigation',async({pa
   await page.goto('/');await page.locator('[data-category="primers"]').click();
   await expect(page.locator('.product-card:visible')).toHaveCount(1);
   await expect(page.locator('#detail-title')).toHaveText('Полиуретановая грунтовка');
-  await page.locator('[data-category="adhesives"]').click();await expect(page.locator('.product-card:visible')).toHaveCount(2);
+  await page.locator('[data-category="adhesives"]').click();await expect(page.locator('.product-card:visible')).toHaveCount(3);
   await page.locator('[data-product="mc90"]').click();await expect(page.locator('#detail-title')).toHaveText('МС-90');
   await expect(page.locator('#tab-specifications')).toHaveCount(0);await expect(page.locator('#panel-description')).toBeVisible();
   await expect(page.locator('#product-consumption')).toContainText('900–1 400 г/м²');
   await page.locator('#tab-description').focus();
   await page.keyboard.press('ArrowRight');await expect(page.locator('#tab-documents')).toBeFocused();await expect(page.locator('#panel-documents')).toBeVisible();
-  await page.locator('[data-product="b90"]').click();await expect(page.locator('#detail-packaging')).toHaveText('Компонент А · 9 кг');
+  await page.locator('[data-product="b90"]').click();await expect(page.locator('#detail-packaging')).toHaveText('А · 9 кг + Б · 1 кг');
 });
 
 test('expanded descriptions keep purpose, consumption, composition and application specific to each product',async({page})=>{
   await page.goto('/');await expect(page.locator('#tab-description')).toHaveAttribute('aria-selected','true');
-  for(const [id,consumption,composition] of [['mc90','900–1 400 г/м²','Гибридный предполимер'],['b90','800–1 300 г/м²','Гибридный полимер'],['primer','100–250 г/м²','Полиуретановая основа']]){
+  for(const [id,consumption,composition] of [['mc90','900–1 400 г/м²','Гибридный предполимер'],['b90','800–1 300 г/м²','Компонент А: гибридный полимер'],['primer','100–250 г/м²','Полиуретановая основа']]){
     await page.locator('[data-product="'+id+'"]').click();
     await expect(page.locator('#consumption-value')).toHaveText(consumption);
     await expect(page.locator('#description-sections')).toContainText(composition);
@@ -112,7 +112,7 @@ test('mobile comparison product names use the full card width',async({page})=>{
 });
 test('an additional product from content is selectable without markup changes',async({page})=>{
   await page.route('**/js/content.js*',async route=>{const response=await route.fetch();const body=await response.text();await route.fulfill({response,body:body+'\nREMMIL_CONTENT.products.push({...REMMIL_CONTENT.products[0],id:"test-product",name:"Тестовая позиция"});'});});
-  await page.goto('/');await expect(page.locator('.product-card')).toHaveCount(4);await page.locator('[data-product="test-product"]').click();await expect(page.locator('#detail-title')).toHaveText('Тестовая позиция');
+  await page.goto('/');await expect(page.locator('.product-card')).toHaveCount(5);await page.locator('[data-product="test-product"]').click();await expect(page.locator('#detail-title')).toHaveText('Тестовая позиция');
 });
 test('all local assets and fragment links resolve',async({page})=>{
   const failed=[];page.on('response',r=>{if(r.status()>=400)failed.push(r.url());});await page.goto('/');

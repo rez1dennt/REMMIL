@@ -313,3 +313,18 @@ h1 { font-size: clamp(46px,5.1vw,74px); line-height: 1.07; letter-spacing: -.055
 }
 @media (max-width: 350px) { h1 { font-size: 35px; }.hero-actions .button { font-size: 11px; padding-inline: var(--s-3); }.manager a { font-size: 12px; }.card-name { font-size: 18px; }.card-description { font-size: 12px; }.contact-phone { font-size: 20px; } }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; }*,*::before,*::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }.reveal-ready { opacity: 1; transform: none; } }
+
+/* Product photos and component choices share the existing catalogue palette. */
+#detail-image { aspect-ratio: 1; object-fit: contain; }
+.card-image img.is-photo,#detail-image.is-photo,.gallery-choice img.is-photo { object-fit: cover; object-position: 50% 45%; border-radius: var(--button-radius); }
+.card-image img.is-photo { aspect-ratio: 1; width: 100%; height: auto; }
+.gallery-caption { margin: var(--s-3) 0; text-align: center; font-size: 13px; color: var(--muted); }
+.product-gallery { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: var(--s-2); }
+.gallery-choice { display: grid; justify-items: center; align-content: start; gap: var(--s-2); padding: var(--s-2); border: 1px solid var(--line); border-radius: var(--button-radius); background: var(--surface); color: inherit; cursor: pointer; font: inherit; font-size: 11px; line-height: 1.4; transition: border-color var(--fast),background var(--fast); }
+.gallery-choice img { width: 100%; max-width: 80px; aspect-ratio: 1; height: auto; object-fit: contain; filter: none; }
+.gallery-choice:hover { border-color: var(--accent); }
+.gallery-choice[aria-pressed="true"] { border-color: var(--accent); background: var(--surface-blue); }
+.detail-purchase.is-unpriced .manager { margin-top: 0; padding-top: 0; border-top: 0; }
+@media (min-width: 601px) { .product-grid.is-paired { grid-template-columns: repeat(2,minmax(0,1fr)); } }
+@media (max-width: 900px) { .detail-purchase.is-unpriced { grid-template-columns: 1fr; }.detail-purchase.is-unpriced .manager { grid-column: 1; grid-row: auto; }.card-image img.is-photo { width: 174px; height: 174px; } }
+@media (max-width: 600px) { .card-image img.is-photo { width: 140px; height: 140px; } }

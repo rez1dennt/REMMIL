@@ -20,3 +20,5 @@ test('formatting preserves Russian rubles and normalizes telephone', () => {
   assert.match(model.formatPrice(4900), /4\s900\s₽/);
   assert.equal(model.phoneHref('+7 (999) 123-45-67'), 'tel:+79991234567');
 });
+
+test('an unconfirmed price stays empty',()=>{assert.equal(model.formatPrice(null),'');assert.equal(model.formatPrice(undefined),'');});

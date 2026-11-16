@@ -5,7 +5,7 @@
     const visible = filterProducts(products, category);
     return visible.find(p => p.id === id) || visible[0] || null;
   };
-  const formatPrice = value => new Intl.NumberFormat('ru-RU').format(value) + ' ₽';
+  const formatPrice = value => typeof value === 'number' && Number.isFinite(value) ? new Intl.NumberFormat('ru-RU').format(value) + ' ₽' : '';
   const phoneHref = value => 'tel:+' + String(value).replace(/\D/g, '');
   const nationalDigits = value => {
     const raw=String(value); let digits=raw.replace(/\D/g,'');

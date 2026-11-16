@@ -7,7 +7,11 @@
     },
     "b90": {
       "name": "PUR-2R В-90",
-      "packaging": "Компонент А · 9 кг"
+      "packaging": "А · 9 кг + Б · 1 кг"
+    },
+    "berger-m1x": {
+      "name": "BergerBond M1X",
+      "packaging": "21 кг · 3 пакета по 7 кг"
     },
     "primer": {
       "name": "Полиуретановая грунтовка",

@@ -25,12 +25,18 @@
   function renderDocuments(product) {
     const host = $('#product-documents');
     host.replaceChildren();
+    const isRemmil = !product.brand || product.brand === config.brand;
+    $('.trademark-document').hidden = !isRemmil;
+    $('.documents-note').textContent = isRemmil
+      ? 'Свидетельство относится к бренду REMMIL. Технические документы на выбранный состав запросите у менеджера.'
+      : 'Технический лист производителя. Документ на английском языке открывается в новой вкладке.';
     host.hidden = product.documents.length === 0;
     if (product.documents.length) {
       product.documents.forEach(file => {
         const link = document.createElement('a');
         link.className = 'document-link'; link.href = file.url; link.textContent = file.title;
-        link.download = ''; host.append(link);
+        if(file.external){link.target='_blank';link.rel='noopener';}else link.download = '';
+        host.append(link);
       });
       return;
     }
@@ -54,6 +60,23 @@
     });
   }
 
+  function renderGallery(product) {
+    const photos = product.gallery || [{src:product.image,alt:(product.brand||config.brand)+' '+product.name+', '+product.packaging,photo:product.photo}];
+    const host=$('#product-gallery'),caption=$('#gallery-caption'),image=$('#detail-image');
+    host.replaceChildren();host.hidden=photos.length<2;caption.hidden=photos.length<2;
+    function select(index){
+      const photo=photos[index];image.src=photo.src;image.alt=photo.alt;image.classList.toggle('is-photo',Boolean(photo.photo));
+      caption.textContent=photo.label||'';
+      Array.from(host.children).forEach((button,i)=>button.setAttribute('aria-pressed',String(i===index)));
+    }
+    if(photos.length>1)photos.forEach((photo,index)=>{
+      const button=document.createElement('button');button.type='button';button.className='gallery-choice';button.setAttribute('aria-controls','detail-image');button.setAttribute('aria-label','Показать: '+photo.label);
+      const thumb=document.createElement('img');thumb.src=photo.src;thumb.alt='';thumb.width=80;thumb.height=80;thumb.loading='lazy';thumb.classList.toggle('is-photo',Boolean(photo.photo));
+      const label=document.createElement('span');label.textContent=photo.label;button.append(thumb,label);button.addEventListener('click',()=>select(index));host.append(button);
+    });
+    select(0);
+  }
+
   function renderProduct(product, animate) {
     if (!product) return;
     selectedId = product.id;
@@ -64,9 +87,11 @@
     $('#detail-title').textContent = product.name;
     $('#detail-description').textContent = product.description;
     $('#detail-packaging').textContent = product.packaging;
-    $('#detail-price').textContent = model.formatPrice(product.price);
-    $('#detail-image').src = product.image;
-    $('#detail-image').alt = 'REMMIL ' + product.name + ', ' + product.packaging;
+    const price=model.formatPrice(product.price);
+    $('#detail-price').textContent=price;$('#detail-price').hidden=!price;
+    $('.detail-purchase').classList.toggle('is-unpriced',!price);
+    $('.price-caption').hidden=!price||!config.pricesAreDemo;
+    renderGallery(product);
     renderDescription(product);
     renderDocuments(product);
     if (animate) {
@@ -86,6 +111,7 @@
       const product = products.find(p=>p.id===card.dataset.product);
       card.hidden = value !== 'all' && product.category !== value;
     });
+    $('#product-list').classList.toggle('is-paired',model.filterProducts(products,value).length===4);
     renderProduct(model.selectProduct(products,selectedId,value),true);
   }
 
@@ -104,8 +130,8 @@
     if (!product) { card.hidden=true; return; }
     card.querySelector('.card-name').textContent=product.name;
     card.querySelector('.card-description').textContent=product.short;
-    card.querySelector('.card-price').textContent=model.formatPrice(product.price);
-    card.querySelector('img').src=product.image;
+    const price=card.querySelector('.card-price');price.textContent=model.formatPrice(product.price);price.hidden=!price.textContent;
+    const image=card.querySelector('img');image.src=product.image;image.alt=(product.brand||config.brand)+' '+product.name;image.classList.toggle('is-photo',Boolean(product.photo));
     card.addEventListener('click',()=>renderProduct(product,true));
   });
   const comparison = $('#comparison-body'); comparison.replaceChildren();
@@ -115,6 +141,7 @@
       const cell=document.createElement(index===0?'th':'td'); if(index===0) cell.scope='row';else cell.dataset.label=['','Назначение','Состав','Фасовка'][index]; cell.textContent=value; row.append(cell);
     }); comparison.append(row);
   });
+  $('#product-list').classList.toggle('is-paired',products.length===4);
   renderProduct(model.selectProduct(products,selectedId),false);
   $('.demo-caption').textContent=config.pricesAreDemo?(config.phoneIsDemo?'Цены и телефон указаны для примера.':'Цены указаны для примера.'):(config.phoneIsDemo?'Телефон указан для примера.':'');
   $('.demo-caption').hidden=!$('.demo-caption').textContent;
@@ -123,6 +150,7 @@
     const span = link.querySelector('span'); if(span) span.textContent=config.phone; else link.textContent=config.phone;
     link.href=config.phoneIsDemo?'#callback':model.phoneHref(config.phone);
   });
+  if(config.managerName)$$('[data-manager-name]').forEach(el=>el.textContent=config.managerName+' · менеджер по подбору');
   $$('[data-phone-action]').forEach(link=>link.href=config.phoneIsDemo?'#callback':model.phoneHref(config.phone));
   $$('[data-category]').forEach(button=>button.addEventListener('click',()=>applyCategory(button.dataset.category,false)));
   $$('[data-detail-tab]').forEach(button=>button.addEventListener('click',()=>activateTab(button.dataset.detailTab,false)));

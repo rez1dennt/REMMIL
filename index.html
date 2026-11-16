@@ -16,15 +16,15 @@
   <link rel="preload" href="assets/fonts/lora-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/manrope-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="css/fonts.css?v=6bf80935922b">
-  <link rel="stylesheet" href="css/styles.css?v=56d2486c10bf">
+  <link rel="stylesheet" href="css/styles.css?v=53945edc1da8">
   <link rel="stylesheet" href="css/ordering.css?v=dc3708fc58d2">
   <link rel="stylesheet" href="css/legal.css?v=91b50e73bad1">
-  <script defer src="js/model.js?v=29e661d7fc2a"></script>
+  <script defer src="js/model.js?v=fcc8b95635fe"></script>
   <script defer src="js/phone-mask.js?v=99385845ba22"></script>
-  <script defer src="js/content.js?v=1bb8a9e32016"></script>
+  <script defer src="js/content.js?v=b1fcd36169a9"></script>
   <script defer src="js/legal-config.js?v=b7632dbfb194"></script>
   <script defer src="js/site-shell.js?v=acfefcb26e87"></script>
-  <script defer src="js/app.js?v=16e583907440"></script>
+  <script defer src="js/app.js?v=952d5194023f"></script>
   <script defer src="js/privacy.js?v=81984ce537fd"></script>
   <noscript><style>.detail-tabs,.callback-form{display:none}#panel-documents[hidden]{display:block!important}</style></noscript>
 </head>
@@ -36,7 +36,7 @@
     <nav class="desktop-nav" aria-label="Основная навигация">
       <a href="#catalog">Продукция</a><a href="#comparison">Как выбрать</a><a href="#documents" data-document-link>Сертификаты</a><a href="#contacts">Контакты</a>
     </nav>
-    <a class="header-phone" data-phone href="tel:+79685322822">+7 (968) 532-28-22</a>
+    <a class="header-phone" data-phone href="tel:+79259268560">+7 (925) 926-85-60</a>
     <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-navigation" aria-label="Открыть меню"><span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span></button>
   </div>
 </header>
@@ -47,7 +47,7 @@
     <a href="#comparison">Как выбрать<span aria-hidden="true">02</span></a>
     <a href="#documents" data-document-link>Сертификаты<span aria-hidden="true">03</span></a>
     <a href="#contacts">Контакты<span aria-hidden="true">04</span></a>
-    <a class="mobile-phone" data-phone href="tel:+79685322822">+7 (968) 532-28-22</a>
+    <a class="mobile-phone" data-phone href="tel:+79259268560">+7 (925) 926-85-60</a>
   </div>
 </nav>
 <main id="main">
@@ -70,27 +70,19 @@
           <button id="category-primers" role="tab" aria-selected="false" aria-controls="product-list" tabindex="-1" data-category="primers">Грунтовки</button>
         </div><span class="category-rule" aria-hidden="true"></span>
       </div>
-      <div class="product-grid" id="product-list" role="tabpanel" aria-labelledby="category-all" data-reveal>
-        <button class="product-card" type="button" data-product="mc90" aria-pressed="false">
-          <span class="card-image"><img src="assets/mc90.webp" alt="Клей REMMIL МС-90, 10 кг" width="760" height="760"></span>
-          <span class="card-info"><strong class="card-name">МС-90</strong><span class="card-description">Силановый клей · 10 кг</span><span class="card-price">9 500 ₽</span></span><span class="selected-badge">Выбрано</span>
-        </button>
-        <button class="product-card is-selected" type="button" data-product="b90" aria-pressed="true">
-          <span class="card-image"><img src="assets/b90.webp" alt="Клей REMMIL PUR-2R В-90, компонент А" width="760" height="760"></span>
-          <span class="card-info"><strong class="card-name">PUR-2R В-90</strong><span class="card-description">Двухкомпонентный клей</span><span class="card-price">6 750 ₽</span></span><span class="selected-badge">Выбрано</span>
-        </button>
-        <button class="product-card" type="button" data-product="primer" aria-pressed="false">
-          <span class="card-image"><img src="assets/primer.webp" alt="Полиуретановая грунтовка REMMIL, 5 кг" width="760" height="760"></span>
-          <span class="card-info"><strong class="card-name">Полиуретановая грунтовка</strong><span class="card-description">Однокомпонентная · 5 кг</span><span class="card-price">8 500 ₽</span></span><span class="selected-badge">Выбрано</span>
-        </button>
-      </div>
+      <div class="product-grid is-paired" id="product-list" role="tabpanel" aria-labelledby="category-all" data-reveal>
+<button class="product-card" type="button" data-product="mc90" aria-pressed="false"><span class="card-image"><img src="assets/mc90.webp" alt="REMMIL МС-90, 10 кг" width="760" height="760" loading="lazy"></span><span class="card-info"><strong class="card-name">МС-90</strong><span class="card-description">Силановый клей · 10 кг</span><span class="card-price">9 500 ₽</span></span><span class="selected-badge">Выбрано</span></button>
+<button class="product-card is-selected" type="button" data-product="b90" aria-pressed="true"><span class="card-image"><img src="assets/b90.webp" alt="REMMIL PUR-2R В-90, А · 9 кг + Б · 1 кг" width="760" height="760" loading="lazy"></span><span class="card-info"><strong class="card-name">PUR-2R В-90</strong><span class="card-description">Двухкомпонентный · А + Б</span><span class="card-price">6 750 ₽</span></span><span class="selected-badge">Выбрано</span></button>
+<button class="product-card" type="button" data-product="berger-m1x" aria-pressed="false"><span class="card-image"><img class="is-photo" src="assets/bergerbond-m1x.webp" alt="Berger-Seidle BergerBond M1X, 21 кг · 3 пакета по 7 кг" width="760" height="760" loading="lazy"></span><span class="card-info"><strong class="card-name">BergerBond M1X</strong><span class="card-description">Однокомпонентный SMP · 21 кг</span><span class="card-price" hidden></span></span><span class="selected-badge">Выбрано</span></button>
+<button class="product-card" type="button" data-product="primer" aria-pressed="false"><span class="card-image"><img src="assets/primer.webp" alt="REMMIL Полиуретановая грунтовка, 5 кг" width="760" height="760" loading="lazy"></span><span class="card-info"><strong class="card-name">Полиуретановая грунтовка</strong><span class="card-description">Однокомпонентная · 5 кг</span><span class="card-price">8 500 ₽</span></span><span class="selected-badge">Выбрано</span></button>
+</div>
       <p class="sr-only" id="catalog-announcement" aria-live="polite"></p>
       <article class="product-detail" id="product-detail" aria-labelledby="detail-title" data-reveal>
-        <div class="detail-photo"><img id="detail-image" src="assets/b90.webp" alt="Клей REMMIL PUR-2R В-90" width="760" height="760"></div>
+        <div class="detail-photo"><img id="detail-image" src="assets/b90.webp" alt="REMMIL PUR-2R В-90, компонент А, 9 кг" width="760" height="760"><p class="gallery-caption" id="gallery-caption" aria-live="polite">Компонент А · 9 кг</p><div class="product-gallery" id="product-gallery" role="group" aria-label="Фотографии товара"><a class="gallery-choice" href="assets/b90.webp" target="_blank" rel="noopener"><img src="assets/b90.webp" width="80" height="80" alt=""><span>Компонент А · 9 кг</span></a><a class="gallery-choice" href="assets/b90-component-b.webp" target="_blank" rel="noopener"><img class="is-photo" src="assets/b90-component-b.webp" width="80" height="80" alt=""><span>Компонент Б · 1 кг</span></a></div></div>
         <div class="detail-content">
           <div class="detail-overview">
-            <div class="detail-description"><h3 id="detail-title">PUR-2R В-90</h3><p id="detail-description">Двухкомпонентный полиуретановый клей для паркета и инженерной доски</p><strong id="detail-packaging">Компонент А · 9 кг</strong></div>
-            <div class="detail-purchase"><strong class="detail-price" id="detail-price">6 750 ₽</strong><span class="price-caption" hidden></span><div class="manager"><span>Менеджер по подбору</span><a data-phone href="tel:+79685322822">+7 (968) 532-28-22</a></div><a class="button button-primary" data-phone-action href="tel:+79685322822">Позвонить менеджеру</a></div>
+            <div class="detail-description"><h3 id="detail-title">PUR-2R В-90</h3><p id="detail-description">Двухкомпонентный полиуретановый клей для паркета и инженерной доски</p><strong id="detail-packaging">А · 9 кг + Б · 1 кг</strong></div>
+            <div class="detail-purchase"><strong class="detail-price" id="detail-price">6 750 ₽</strong><span class="price-caption" hidden></span><div class="manager"><span data-manager-name>Иван · менеджер по подбору</span><a data-phone href="tel:+79259268560">+7 (925) 926-85-60</a></div><a class="button button-primary" data-phone-action href="tel:+79259268560">Позвонить менеджеру</a></div>
           </div>
           <div class="detail-tabs" role="tablist" aria-label="Информация о товаре">
             <button role="tab" id="tab-description" aria-selected="true" aria-controls="panel-description" data-detail-tab="description">Описание</button>
@@ -101,13 +93,13 @@
               <p id="product-description-text">Двухкомпонентный полиуретановый жёстко-эластичный клей для укладки деревянных и композитных напольных покрытий и панелей. Не содержит органических растворителей. Совместим с полами с подогревом.</p>
               <div class="product-consumption" id="product-consumption"><h4>Расход материала</h4><strong id="consumption-value">800–1 300 г/м²</strong><p id="consumption-notes">Расход зависит от зубцов шпателя, вида паркета и основания.</p></div>
               <div class="description-sections" id="description-sections"><details class="product-description-section" name="product-b90-information"><summary><h4>Для каких работ<span class="description-symbol" aria-hidden="true"></span></h4></summary><div class="description-answer"><p>Приклеивание массивного, штучного, модульного, крупноформатного и мозаичного паркета, паркетной и инженерной доски, ламината, SPC, MSPC и других напольных покрытий. Также подходит для приклеивания фанеры, ОСП и ДСП.</p></div></details>
-<details class="product-description-section" name="product-b90-information"><summary><h4>Состав<span class="description-symbol" aria-hidden="true"></span></h4></summary><div class="description-answer"><p>Гибридный полимер, пигменты и функциональные добавки. Не содержит органических растворителей.</p></div></details>
+<details class="product-description-section" name="product-b90-information"><summary><h4>Состав<span class="description-symbol" aria-hidden="true"></span></h4></summary><div class="description-answer"><p>Компонент А: гибридный полимер, пигменты и функциональные добавки. Компонент Б: полиизоцианат. Не содержит органических растворителей.</p></div></details>
 <details class="product-description-section" name="product-b90-information"><summary><h4>Подготовка основания<span class="description-symbol" aria-hidden="true"></span></h4></summary><div class="description-answer"><p>Очистите и обеспыльте основание. Удалите непрочные фрагменты и устраните дефекты. Для улучшения сцепления с основанием рекомендуется полиуретановый грунт REMMIL.</p></div></details>
 <details class="product-description-section" name="product-b90-information"><summary><h4>Нанесение<span class="description-symbol" aria-hidden="true"></span></h4></summary><div class="description-answer"><p>Перед применением полностью смешайте компонент А и компонент Б. Доведите клей до комнатной температуры. Оптимальная температура для работы — от +18 до +35 °C.
 
 Наносите клей непосредственно на основание зубчатым шпателем B3, B7 или B11. Уложенное покрытие аккуратно прижмите к основанию. Не проклеивайте шпунтовые соединения. У неподвижных конструкций оставляйте зазор 5–15 мм.</p></div></details>
 <details class="product-description-section" name="product-b90-information"><summary><h4>После укладки<span class="description-symbol" aria-hidden="true"></span></h4></summary><div class="description-answer"><p>Время отверждения — не более 12 часов при +20 °C и относительной влажности воздуха 70%. Шлифование и лакирование паркета выполняют через 24–48 часов после приклеивания. После работы инструмент очищают растворителем.</p></div></details>
-<details class="product-description-section" name="product-b90-information"><summary><h4>Фасовка и комплектность<span class="description-symbol" aria-hidden="true"></span></h4></summary><div class="description-answer"><p>9 кг на представленной упаковке — масса компонента А. Для применения также нужен компонент Б. Комплектность поставки уточните у менеджера перед заказом.</p></div></details>
+<details class="product-description-section" name="product-b90-information"><summary><h4>Фасовка и комплектность<span class="description-symbol" aria-hidden="true"></span></h4></summary><div class="description-answer"><p>Компонент А — ведро 9 кг, компонент Б — флакон 1 кг. Для применения необходимы оба компонента. Комплектность поставки и стоимость уточните у Ивана перед заказом.</p></div></details>
 <details class="product-description-section" name="product-b90-information"><summary><h4>Хранение<span class="description-symbol" aria-hidden="true"></span></h4></summary><div class="description-answer"><p>Гарантийный срок хранения — 18 месяцев в заводской упаковке при температуре от +5 до +30 °C.</p></div></details></div>
             </div>
             <div class="detail-panel" id="panel-documents" role="tabpanel" aria-labelledby="tab-documents" tabindex="0" hidden>
@@ -134,12 +126,13 @@
       <p class="section-intro">Сравните назначение, состав и фасовку.</p>
       <div class="comparison-scroll" tabindex="0" role="region" aria-label="Сравнение материалов">
         <table class="comparison-table"><thead><tr><th scope="col">Материал</th><th scope="col">Назначение</th><th scope="col">Состав</th><th scope="col">Фасовка</th></tr></thead><tbody id="comparison-body">
-          <tr><th scope="row">МС-90</th><td>Клей для паркета</td><td>Силановый, 1 компонент</td><td>10 кг</td></tr>
-          <tr><th scope="row">PUR-2R В-90</th><td>Клей для паркета и инженерной доски</td><td>Полиуретановый, 2 компонента</td><td>9 кг, компонент А</td></tr>
-          <tr><th scope="row">Грунт-покрытие</th><td>Подготовка основания</td><td>Полиуретановое, 1 компонент</td><td>5 кг</td></tr>
-        </tbody></table>
+<tr><th scope="row">МС-90</th><td data-label="Назначение">Клей для паркета</td><td data-label="Состав">Силановый, 1 компонент</td><td data-label="Фасовка">10 кг</td></tr>
+<tr><th scope="row">PUR-2R В-90</th><td data-label="Назначение">Клей для паркета и инженерной доски</td><td data-label="Состав">Полиуретановый, 2 компонента</td><td data-label="Фасовка">А — 9 кг; Б — 1 кг</td></tr>
+<tr><th scope="row">BergerBond M1X</th><td data-label="Назначение">Двух- и трёхслойная доска</td><td data-label="Состав">SMP, 1 компонент</td><td data-label="Фасовка">21 кг (3 × 7 кг)</td></tr>
+<tr><th scope="row">Грунт-покрытие</th><td data-label="Назначение">Подготовка основания</td><td data-label="Состав">Полиуретановое, 1 компонент</td><td data-label="Фасовка">5 кг</td></tr>
+</tbody></table>
       </div>
-      <p class="comparison-note"><svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 11v6M12 7h.01"/></svg><span>Обратите внимание: 9 кг у PUR-2R В-90 — масса компонента А. Комплектность уточните у менеджера.</span></p>
+      <p class="comparison-note"><svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 11v6M12 7h.01"/></svg><span>Для работы с PUR-2R В-90 нужны оба компонента: А — 9 кг и Б — 1 кг. Комплектность поставки уточните у Ивана.</span></p>
     </div>
   </section>
 
@@ -181,7 +174,7 @@
 <footer class="site-footer" id="contacts">
   <div class="container">
     <div class="contact-row" data-reveal>
-      <div class="contact-heading"><h2 class="section-title">Обсудим вашу задачу</h2><a class="contact-phone" data-phone href="tel:+79685322822"><svg class="icon phone-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.79 19.79 0 0 1 11.19 19a19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-2.91-8.67A2 2 0 0 1 4.26 2h3a2 2 0 0 1 2 1.72c.12.96.35 1.9.69 2.79a2 2 0 0 1-.45 2.11L8.23 9.89a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.89.34 1.83.57 2.79.69A2 2 0 0 1 22 16.92Z"/></svg><span>+7 (968) 532-28-22</span></a><p>Менеджер REMMIL</p></div>
+      <div class="contact-heading"><h2 class="section-title">Обсудим вашу задачу</h2><a class="contact-phone" data-phone href="tel:+79259268560"><svg class="icon phone-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.79 19.79 0 0 1 11.19 19a19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-2.91-8.67A2 2 0 0 1 4.26 2h3a2 2 0 0 1 2 1.72c.12.96.35 1.9.69 2.79a2 2 0 0 1-.45 2.11L8.23 9.89a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.89.34 1.83.57 2.79.69A2 2 0 0 1 22 16.92Z"/></svg><span>+7 (925) 926-85-60</span></a><p>Иван · менеджер REMMIL</p></div>
       <form id="callback" class="callback-form" method="post" action="api/lead.php" novalidate>
         <div class="form-trap" aria-hidden="true"><label for="lead-website">Сайт компании</label><input id="lead-website" name="website" tabindex="-1" autocomplete="off"></div>
         <div class="form-field"><label for="lead-name">Имя</label><input id="lead-name" name="name" placeholder="Ваше имя" autocomplete="given-name" minlength="2" maxlength="60" required aria-describedby="name-error"><span class="field-error" id="name-error" aria-live="polite"></span></div>
