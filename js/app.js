@@ -7,6 +7,8 @@
   const $ = selector => document.querySelector(selector);
   const $$ = selector => Array.from(document.querySelectorAll(selector));
   let selectedId = 'b90';
+  let selectedSku = 'b90';
+  const variantChoices = new Map();
   let category = 'all';
   let currentTab = 'description';
   const detail = $('#product-detail');
@@ -61,11 +63,12 @@
   }
 
   function renderGallery(product) {
-    const photos = product.gallery || [{src:product.image,alt:(product.brand||config.brand)+' '+product.name+', '+product.packaging,photo:product.photo}];
+    const photos = product.gallery || [{src:product.image,alt:(product.brand||config.brand)+' '+product.name+', '+product.packaging,photo:product.photo,blend:product.blend}];
     const host=$('#product-gallery'),caption=$('#gallery-caption'),image=$('#detail-image');
     host.replaceChildren();host.hidden=photos.length<2;caption.hidden=photos.length<2;
     function select(index){
       const photo=photos[index];image.src=photo.src;image.alt=photo.alt;image.classList.toggle('is-photo',Boolean(photo.photo));
+      image.classList.toggle('is-stock-photo',Boolean(photo.blend));
       caption.textContent=photo.label||'';
       Array.from(host.children).forEach((button,i)=>button.setAttribute('aria-pressed',String(i===index)));
     }
@@ -77,9 +80,23 @@
     select(0);
   }
 
+  function renderVariants(product) {
+    const host=$('#variant-options'),variants=product.variants||[];host.replaceChildren();$('#product-variants').hidden=!variants.length;
+    variants.forEach(variant=>{
+      const button=document.createElement('button');button.type='button';button.className='variant-choice';button.dataset.variant=variant.id;
+      button.textContent=variant.packaging;button.setAttribute('aria-pressed',String(product.variantId===variant.id));
+      button.addEventListener('click',()=>{
+        variantChoices.set(product.id,variant.id);renderProduct(products.find(item=>item.id===product.id),true);
+        $('#variant-options [data-variant="'+variant.id+'"]').focus({preventScroll:true});
+      });host.append(button);
+    });
+  }
+
   function renderProduct(product, animate) {
     if (!product) return;
+    product=model.resolveProduct(product,variantChoices.get(product.id));
     selectedId = product.id;
+    selectedSku = product.variantId || product.id;
     $$('[data-product]').forEach(card => {
       const active = card.dataset.product === product.id;
       card.classList.toggle('is-selected',active); card.setAttribute('aria-pressed',String(active));
@@ -87,6 +104,7 @@
     $('#detail-title').textContent = product.name;
     $('#detail-description').textContent = product.description;
     $('#detail-packaging').textContent = product.packaging;
+    renderVariants(product);
     const price=model.formatPrice(product.price);
     $('#detail-price').textContent=price;$('#detail-price').hidden=!price;
     $('.detail-purchase').classList.toggle('is-unpriced',!price);
@@ -96,7 +114,7 @@
     renderDocuments(product);
     if (animate) {
       detail.classList.remove('detail-changing'); void detail.offsetWidth; detail.classList.add('detail-changing');
-      $('#catalog-announcement').textContent = 'Выбран ' + product.name + '. Информация о товаре обновлена.';
+      $('#catalog-announcement').textContent = 'Выбран ' + product.name + ', ' + product.packaging + '. Информация о товаре обновлена.';
     }
   }
 
@@ -121,7 +139,7 @@
     const card=document.createElement('button');card.type='button';card.className='product-card';card.dataset.product=product.id;card.setAttribute('aria-pressed','false');
     const photo=document.createElement('span');photo.className='card-image';const image=document.createElement('img');image.src=product.image;image.alt='REMMIL '+product.name;image.width=760;image.height=760;image.loading='lazy';photo.append(image);
     const info=document.createElement('span');info.className='card-info';
-    [['strong','card-name',product.name],['span','card-description',product.short],['span','card-price',model.formatPrice(product.price)]].forEach(([tag,className,text])=>{const el=document.createElement(tag);el.className=className;el.textContent=text;info.append(el);});
+    [['strong','card-name',product.name],['span','card-description',product.short],['span','card-price',model.formatCatalogPrice(product)]].forEach(([tag,className,text])=>{const el=document.createElement(tag);el.className=className;el.textContent=text;info.append(el);});
     const badge=document.createElement('span');badge.className='selected-badge';badge.textContent='Выбрано';card.append(photo,info,badge);$('#product-list').append(card);
   });
   // Populate all repeatable information from the same editable content file.
@@ -130,8 +148,10 @@
     if (!product) { card.hidden=true; return; }
     card.querySelector('.card-name').textContent=product.name;
     card.querySelector('.card-description').textContent=product.short;
-    const price=card.querySelector('.card-price');price.textContent=model.formatPrice(product.price);price.hidden=!price.textContent;
+    card.toggleAttribute('data-has-variants',Boolean(product.variants?.length));
+    const price=card.querySelector('.card-price');price.textContent=model.formatCatalogPrice(product);price.hidden=!price.textContent;
     const image=card.querySelector('img');image.src=product.image;image.alt=(product.brand||config.brand)+' '+product.name;image.classList.toggle('is-photo',Boolean(product.photo));
+    image.classList.toggle('is-stock-photo',Boolean(product.blend));
     card.addEventListener('click',()=>renderProduct(product,true));
   });
   const comparison = $('#comparison-body'); comparison.replaceChildren();
@@ -197,7 +217,7 @@
     if(!config.formEndpoint){status.textContent='Форма работает в режиме демонстрации. Заявка не отправлена.';return;}
     const button=form.querySelector('button'); button.disabled=true;form.setAttribute('aria-busy','true');status.textContent='Отправляем заявку…';
     try {
-      const payload={name:name.value.trim().replace(/\s+/g,' '),phone:model.phoneHref(phone.value).slice(4),product:selectedId,website:form.elements.website.value,consent:{accepted:true,version:window.REMMIL_LEGAL.version,document:new URL('consent.html',location.href).href,acceptedAt:new Date().toISOString()}};
+      const payload={name:name.value.trim().replace(/\s+/g,' '),phone:model.phoneHref(phone.value).slice(4),product:selectedSku,website:form.elements.website.value,consent:{accepted:true,version:window.REMMIL_LEGAL.version,document:new URL('consent.html',location.href).href,acceptedAt:new Date().toISOString()}};
       const fingerprint=JSON.stringify([payload.name,payload.phone,payload.product,payload.consent.version]);
       if(!submission||submission.fingerprint!==fingerprint){const bytes=crypto.getRandomValues(new Uint8Array(16));bytes[6]=(bytes[6]&15)|64;bytes[8]=(bytes[8]&63)|128;const hex=Array.from(bytes,b=>b.toString(16).padStart(2,'0')).join('');submission={fingerprint,id:hex.slice(0,8)+'-'+hex.slice(8,12)+'-'+hex.slice(12,16)+'-'+hex.slice(16,20)+'-'+hex.slice(20)};}
       payload.submissionId=submission.id;

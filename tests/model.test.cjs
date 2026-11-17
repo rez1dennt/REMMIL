@@ -22,3 +22,13 @@ test('formatting preserves Russian rubles and normalizes telephone', () => {
 });
 
 test('an unconfirmed price stays empty',()=>{assert.equal(model.formatPrice(null),'');assert.equal(model.formatPrice(undefined),'');});
+
+test('packaging resolves a concrete SKU without changing the parent product',()=>{
+ const family={id:'primer-p',price:5250,variants:[{id:'p11',packaging:'1,1 кг',price:5250},{id:'p55',packaging:'5,5 кг',price:22650}]};
+ const selected=model.resolveProduct(family,'p55');assert.equal(selected.id,'primer-p');assert.equal(selected.variantId,'p55');assert.equal(selected.price,22650);assert.equal(selected.packaging,'5,5 кг');assert.equal(family.price,5250);
+ assert.equal(model.resolveProduct(family,'missing').variantId,'p11');assert.equal(model.resolveProduct(products[0]),products[0]);
+});
+test('catalogue price reflects the lowest available packaging price',()=>{
+ assert.match(model.formatCatalogPrice({variants:[{price:22650},{price:5250}]}),/^от 5\s250\s₽$/);
+ assert.equal(model.formatCatalogPrice({price:null}),'');assert.match(model.formatCatalogPrice({price:9500}),/^9\s500\s₽$/);
+});

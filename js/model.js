@@ -6,6 +6,15 @@
     return visible.find(p => p.id === id) || visible[0] || null;
   };
   const formatPrice = value => typeof value === 'number' && Number.isFinite(value) ? new Intl.NumberFormat('ru-RU').format(value) + ' ₽' : '';
+  const resolveProduct = (product,variantId) => {
+    if(!product.variants?.length)return product;
+    const variant=product.variants.find(item=>item.id===variantId)||product.variants[0];
+    return {...product,...variant,id:product.id,variantId:variant.id};
+  };
+  const formatCatalogPrice = product => {
+    const prices=(product.variants||[]).map(item=>item.price).filter(value=>typeof value==='number'&&Number.isFinite(value));
+    return prices.length?(new Set(prices).size>1?'от ':'')+formatPrice(Math.min(...prices)):formatPrice(product.price);
+  };
   const phoneHref = value => 'tel:+' + String(value).replace(/\D/g, '');
   const nationalDigits = value => {
     const raw=String(value); let digits=raw.replace(/\D/g,'');
@@ -72,7 +81,7 @@
     else if(/^(\d)\1{9}$/.test(digits.slice(1)))errors.phone='Проверьте номер телефона: все цифры одинаковые.';
     return { valid: !Object.keys(errors).length, errors };
   };
-  const api = { filterProducts, selectProduct, formatPrice, phoneHref, validateLead, formatPhone, editPhone, phoneCaret };
+  const api = { filterProducts, selectProduct, formatPrice, formatCatalogPrice, resolveProduct, phoneHref, validateLead, formatPhone, editPhone, phoneCaret };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.RemmilModel = api;
 })(typeof window !== 'undefined' ? window : globalThis);

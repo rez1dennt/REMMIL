@@ -14,7 +14,7 @@ for(const width of [1440,1280,1024,900,768,600,390,360,320]){
 }
 test('category, product selection, inner tabs and keyboard navigation',async({page})=>{
   await page.goto('/');await page.locator('[data-category="primers"]').click();
-  await expect(page.locator('.product-card:visible')).toHaveCount(1);
+  await expect(page.locator('.product-card:visible')).toHaveCount(2);
   await expect(page.locator('#detail-title')).toHaveText('Полиуретановая грунтовка');
   await page.locator('[data-category="adhesives"]').click();await expect(page.locator('.product-card:visible')).toHaveCount(3);
   await page.locator('[data-product="mc90"]').click();await expect(page.locator('#detail-title')).toHaveText('МС-90');
@@ -113,7 +113,7 @@ test('mobile comparison product names use the full card width',async({page})=>{
 });
 test('an additional product from content is selectable without markup changes',async({page})=>{
   await page.route('**/js/content.js*',async route=>{const response=await route.fetch();const body=await response.text();await route.fulfill({response,body:body+'\nREMMIL_CONTENT.products.push({...REMMIL_CONTENT.products[0],id:"test-product",name:"Тестовая позиция"});'});});
-  await page.goto('/');await expect(page.locator('.product-card')).toHaveCount(5);await page.locator('[data-product="test-product"]').click();await expect(page.locator('#detail-title')).toHaveText('Тестовая позиция');
+  await page.goto('/');await expect(page.locator('.product-card')).toHaveCount(6);await page.locator('[data-product="test-product"]').click();await expect(page.locator('#detail-title')).toHaveText('Тестовая позиция');
 });
 test('all local assets and fragment links resolve',async({page})=>{
   const failed=[];page.on('response',r=>{if(r.status()>=400)failed.push(r.url());});await page.goto('/');

@@ -51,7 +51,7 @@ test('M1X has no price, factual description, actual inner packaging and its own 
 });
 for(const width of [1280,768,360,320])test('updated catalogue and manager at '+width,async({page})=>{
   await page.setViewportSize({width,height:900});await page.goto('/');
-  await expect(page.locator('.product-card')).toHaveCount(4);
+  await expect(page.locator('.product-card')).toHaveCount(5);
   await expect(page.locator('[data-phone]').first()).toHaveAttribute('href','tel:+79259268560');
   await expect(page.locator('.manager')).toContainText('Иван');
   await page.locator('[data-product="berger-m1x"]').click();

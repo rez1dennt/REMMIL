@@ -3,7 +3,7 @@
   "products": {
     "mc90": {
       "name": "МС-90",
-      "packaging": "10 кг"
+      "packaging": "10 кг · 2 пакета по 5 кг"
     },
     "b90": {
       "name": "PUR-2R В-90",
@@ -16,6 +16,14 @@
     "primer": {
       "name": "Полиуретановая грунтовка",
       "packaging": "5 кг"
+    },
+    "berger-primer-p-11": {
+      "name": "BergerBond Primer P",
+      "packaging": "1,1 кг"
+    },
+    "berger-primer-p-55": {
+      "name": "BergerBond Primer P",
+      "packaging": "5,5 кг"
     }
   }
 }

@@ -7,8 +7,8 @@ const esc=value=>String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>
 const model=require('../js/model.js');
 let html=fs.readFileSync(path.join(root,'index.html'),'utf8');
 const cards=content.products.map(p=>{
-  const selected=p.id===product.id,price=model.formatPrice(p.price);
-  return '<button class="product-card'+(selected?' is-selected':'')+'" type="button" data-product="'+esc(p.id)+'" aria-pressed="'+selected+'"><span class="card-image"><img'+(p.photo?' class="is-photo"':'')+' src="'+esc(p.image)+'" alt="'+esc((p.brand||content.brand)+' '+p.name+', '+p.packaging)+'" width="760" height="760" loading="lazy"></span><span class="card-info"><strong class="card-name">'+esc(p.name)+'</strong><span class="card-description">'+esc(p.short)+'</span><span class="card-price"'+(price?'':' hidden')+'>'+esc(price)+'</span></span><span class="selected-badge">Выбрано</span></button>';
+  const selected=p.id===product.id,price=model.formatCatalogPrice(p),imageClasses=[p.photo?'is-photo':'',p.blend?'is-stock-photo':''].filter(Boolean).join(' ');
+  return '<button class="product-card'+(selected?' is-selected':'')+'" type="button" data-product="'+esc(p.id)+'"'+(p.variants?.length?' data-has-variants':'')+' aria-pressed="'+selected+'"><span class="card-image"><img'+(imageClasses?' class="'+imageClasses+'"':'')+' src="'+esc(p.image)+'" alt="'+esc((p.brand||content.brand)+' '+p.name+', '+p.packaging)+'" width="760" height="760" loading="lazy"></span><span class="card-info"><strong class="card-name">'+esc(p.name)+'</strong><span class="card-description">'+esc(p.short)+'</span><span class="card-price"'+(price?'':' hidden')+'>'+esc(price)+'</span></span><span class="selected-badge">Выбрано</span></button>';
 }).join('\n');
 html=html.replace(/<div class="product-grid[^\"]*" id="product-list"[^>]*>[\s\S]*?<\/div>(\s*<p class="sr-only" id="catalog-announcement")/,'<div class="product-grid'+(content.products.length===4?' is-paired':'')+'" id="product-list" role="tabpanel" aria-labelledby="category-all" data-reveal>\n'+cards+'\n</div>$1');
 html=html.replace(/(<strong id="detail-packaging">)[\s\S]*?(<\/strong>)/,'$1'+esc(product.packaging)+'$2');
@@ -30,5 +30,6 @@ for(const file of ['index.html','privacy.html','consent.html','cookies.html','re
 }
 fs.mkdirSync(path.join(root,'private'),{recursive:true});
 const legal={window:{}};vm.runInNewContext(fs.readFileSync(path.join(root,'js/legal-config.js'),'utf8'),legal);
-fs.writeFileSync(path.join(root,'private/catalog.json'),JSON.stringify({consentVersion:legal.window.REMMIL_LEGAL.version,products:Object.fromEntries(content.products.map(p=>[p.id,{name:p.name,packaging:p.packaging}]))},null,2)+'\n');
+const catalogue=content.products.flatMap(p=>p.variants?.length?p.variants.map(variant=>[variant.id,{name:p.name,packaging:variant.packaging}]):[[p.id,{name:p.name,packaging:p.packaging}]]);
+fs.writeFileSync(path.join(root,'private/catalog.json'),JSON.stringify({consentVersion:legal.window.REMMIL_LEGAL.version,products:Object.fromEntries(catalogue)},null,2)+'\n');
 console.log('Built product disclosures, legal pages, asset fingerprints and PHP catalog.');

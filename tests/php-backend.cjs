@@ -40,6 +40,12 @@ test('PHP sends a complete lead and records consent using server time',async()=>
  const record=JSON.parse(fs.readFileSync(path.join(privateDir,'storage/consents',value.submissionId+'.json')));assert.equal(record.status,'sent');assert.equal(record.consent.accepted,true);assert.notEqual(record.consent.acceptedAt,value.consent.acceptedAt);assert.ok(Math.abs(Date.parse(record.consent.acceptedAt)-Date.now())<10000);
 });
 test('repeating a submission does not send another email',async()=>{const value=payload();await post(value);const count=messages.length;assert.equal((await post(value)).status,200);assert.equal(messages.length,count);assert.equal((await post({...value,name:'Другое Имя'})).status,409);});
+test('Primer P packaging identifiers retain the chosen size in the email',async()=>{
+ for(const [product,packaging] of [['berger-primer-p-11','1,1 кг'],['berger-primer-p-55','5,5 кг']]){
+  const count=messages.length,result=await post({...payload(),product});assert.equal(result.status,200);assert.equal(messages.length,count+1);
+  const mime=messages.at(-1),body=Buffer.from(mime.slice(mime.indexOf('\r\n\r\n')+4).replace(/\s/g,''),'base64').toString('utf8');assert.match(body,/BergerBond Primer P/);assert.ok(body.includes(packaging));
+ }
+});
 test('consent is required and its version must be current',async()=>{const value=payload();assert.equal((await post({...value,consent:{accepted:false,version:'2026-11-12'}})).status,422);assert.equal((await post({...value,consent:{accepted:true,version:'old'}})).status,409);});
 test('invalid names, phones, products and IDs are rejected',async()=>{for(const patch of [{name:'<script>bad</script>'},{name:'А'},{phone:'+70000000000'},{phone:'+79999999999'},{product:'unknown'},{submissionId:'../../secret'}])assert.equal((await post({...payload(),...patch})).status,422);});
 test('cross-origin and honeypot requests are rejected',async()=>{assert.equal((await post(payload(),{Origin:'https://unrelated.example'})).status,403);assert.equal((await post({...payload(),website:'bot.example'})).status,400);});

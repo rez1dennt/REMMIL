@@ -16,15 +16,15 @@
   <link rel="preload" href="assets/fonts/lora-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/manrope-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="css/fonts.css?v=6bf80935922b">
-  <link rel="stylesheet" href="css/styles.css?v=ce620a40b350">
+  <link rel="stylesheet" href="css/styles.css?v=8ca9c8a35eb7">
   <link rel="stylesheet" href="css/ordering.css?v=dc3708fc58d2">
   <link rel="stylesheet" href="css/legal.css?v=91b50e73bad1">
-  <script defer src="js/model.js?v=fcc8b95635fe"></script>
+  <script defer src="js/model.js?v=8e0ca00fa37c"></script>
   <script defer src="js/phone-mask.js?v=99385845ba22"></script>
-  <script defer src="js/content.js?v=c0b2df8a5c6f"></script>
+  <script defer src="js/content.js?v=9fbf456ba947"></script>
   <script defer src="js/legal-config.js?v=b7632dbfb194"></script>
   <script defer src="js/site-shell.js?v=acfefcb26e87"></script>
-  <script defer src="js/app.js?v=952d5194023f"></script>
+  <script defer src="js/app.js?v=276a6e6f0c94"></script>
   <script defer src="js/privacy.js?v=81984ce537fd"></script>
   <noscript><style>.detail-tabs,.callback-form{display:none}#panel-documents[hidden]{display:block!important}</style></noscript>
 </head>
@@ -70,18 +70,19 @@
           <button id="category-primers" role="tab" aria-selected="false" aria-controls="product-list" tabindex="-1" data-category="primers">Грунтовки</button>
         </div><span class="category-rule" aria-hidden="true"></span>
       </div>
-      <div class="product-grid is-paired" id="product-list" role="tabpanel" aria-labelledby="category-all" data-reveal>
-<button class="product-card" type="button" data-product="mc90" aria-pressed="false"><span class="card-image"><img src="assets/mc90.webp" alt="REMMIL МС-90, 10 кг" width="760" height="760" loading="lazy"></span><span class="card-info"><strong class="card-name">МС-90</strong><span class="card-description">Силановый клей · 10 кг</span><span class="card-price">9 500 ₽</span></span><span class="selected-badge">Выбрано</span></button>
+      <div class="product-grid" id="product-list" role="tabpanel" aria-labelledby="category-all" data-reveal>
+<button class="product-card" type="button" data-product="mc90" aria-pressed="false"><span class="card-image"><img src="assets/mc90.webp" alt="REMMIL МС-90, 10 кг · 2 пакета по 5 кг" width="760" height="760" loading="lazy"></span><span class="card-info"><strong class="card-name">МС-90</strong><span class="card-description">Силановый клей · 2 × 5 кг</span><span class="card-price">9 500 ₽</span></span><span class="selected-badge">Выбрано</span></button>
 <button class="product-card is-selected" type="button" data-product="b90" aria-pressed="true"><span class="card-image"><img src="assets/b90.webp" alt="REMMIL PUR-2R В-90, А · 9 кг + Б · 1 кг" width="760" height="760" loading="lazy"></span><span class="card-info"><strong class="card-name">PUR-2R В-90</strong><span class="card-description">Двухкомпонентный · А + Б</span><span class="card-price">6 750 ₽</span></span><span class="selected-badge">Выбрано</span></button>
 <button class="product-card" type="button" data-product="berger-m1x" aria-pressed="false"><span class="card-image"><img src="assets/bergerbond-m1x-cutout.webp" alt="Berger-Seidle BergerBond M1X, 21 кг · 3 пакета по 7 кг" width="760" height="760" loading="lazy"></span><span class="card-info"><strong class="card-name">BergerBond M1X</strong><span class="card-description">Однокомпонентный SMP · 21 кг</span><span class="card-price" hidden></span></span><span class="selected-badge">Выбрано</span></button>
 <button class="product-card" type="button" data-product="primer" aria-pressed="false"><span class="card-image"><img src="assets/primer.webp" alt="REMMIL Полиуретановая грунтовка, 5 кг" width="760" height="760" loading="lazy"></span><span class="card-info"><strong class="card-name">Полиуретановая грунтовка</strong><span class="card-description">Однокомпонентная · 5 кг</span><span class="card-price">8 500 ₽</span></span><span class="selected-badge">Выбрано</span></button>
+<button class="product-card" type="button" data-product="berger-primer-p" data-has-variants aria-pressed="false"><span class="card-image"><img class="is-stock-photo" src="assets/berger-primer-p-11.webp" alt="Berger-Seidle BergerBond Primer P, 1,1 кг" width="760" height="760" loading="lazy"></span><span class="card-info"><strong class="card-name">BergerBond Primer P</strong><span class="card-description">Грунтовка · 1,1 / 5,5 кг</span><span class="card-price">от 5 250 ₽</span></span><span class="selected-badge">Выбрано</span></button>
 </div>
       <p class="sr-only" id="catalog-announcement" aria-live="polite"></p>
       <article class="product-detail" id="product-detail" aria-labelledby="detail-title" data-reveal>
         <div class="detail-photo"><img id="detail-image" src="assets/b90.webp" alt="REMMIL PUR-2R В-90, компонент А, 9 кг" width="760" height="760"><p class="gallery-caption" id="gallery-caption" aria-live="polite">Компонент А · 9 кг</p><div class="product-gallery" id="product-gallery" role="group" aria-label="Фотографии товара"><a class="gallery-choice" href="assets/b90.webp" target="_blank" rel="noopener"><img src="assets/b90.webp" width="80" height="80" alt=""><span>Компонент А · 9 кг</span></a><a class="gallery-choice" href="assets/b90-component-b-cutout.png" target="_blank" rel="noopener"><img src="assets/b90-component-b-cutout.png" width="80" height="80" alt=""><span>Компонент Б · 1 кг</span></a></div></div>
         <div class="detail-content">
           <div class="detail-overview">
-            <div class="detail-description"><h3 id="detail-title">PUR-2R В-90</h3><p id="detail-description">Двухкомпонентный полиуретановый клей для паркета и инженерной доски</p><strong id="detail-packaging">А · 9 кг + Б · 1 кг</strong></div>
+            <div class="detail-description"><h3 id="detail-title">PUR-2R В-90</h3><p id="detail-description">Двухкомпонентный полиуретановый клей для паркета и инженерной доски</p><strong id="detail-packaging">А · 9 кг + Б · 1 кг</strong><fieldset class="product-variants" id="product-variants" hidden><legend>Выберите фасовку</legend><div id="variant-options" class="variant-options"></div></fieldset></div>
             <div class="detail-purchase"><strong class="detail-price" id="detail-price">6 750 ₽</strong><span class="price-caption" hidden></span><div class="manager"><span data-manager-name>Иван · менеджер по подбору</span><a data-phone href="tel:+79259268560">+7 (925) 926-85-60</a></div><a class="button button-primary" data-phone-action href="tel:+79259268560">Позвонить менеджеру</a></div>
           </div>
           <div class="detail-tabs" role="tablist" aria-label="Информация о товаре">
@@ -126,10 +127,11 @@
       <p class="section-intro">Сравните назначение, состав и фасовку.</p>
       <div class="comparison-scroll" tabindex="0" role="region" aria-label="Сравнение материалов">
         <table class="comparison-table"><thead><tr><th scope="col">Материал</th><th scope="col">Назначение</th><th scope="col">Состав</th><th scope="col">Фасовка</th></tr></thead><tbody id="comparison-body">
-<tr><th scope="row">МС-90</th><td data-label="Назначение">Клей для паркета</td><td data-label="Состав">Силановый, 1 компонент</td><td data-label="Фасовка">10 кг</td></tr>
+<tr><th scope="row">МС-90</th><td data-label="Назначение">Клей для паркета</td><td data-label="Состав">Силановый, 1 компонент</td><td data-label="Фасовка">10 кг (2 × 5 кг)</td></tr>
 <tr><th scope="row">PUR-2R В-90</th><td data-label="Назначение">Клей для паркета и инженерной доски</td><td data-label="Состав">Полиуретановый, 2 компонента</td><td data-label="Фасовка">А — 9 кг; Б — 1 кг</td></tr>
 <tr><th scope="row">BergerBond M1X</th><td data-label="Назначение">Двух- и трёхслойная доска</td><td data-label="Состав">SMP, 1 компонент</td><td data-label="Фасовка">21 кг (3 × 7 кг)</td></tr>
 <tr><th scope="row">Грунт-покрытие</th><td data-label="Назначение">Подготовка основания</td><td data-label="Состав">Полиуретановое, 1 компонент</td><td data-label="Фасовка">5 кг</td></tr>
+<tr><th scope="row">BergerBond Primer P</th><td data-label="Назначение">Подготовка минерального основания</td><td data-label="Состав">Полиуретановая, 1 компонент</td><td data-label="Фасовка">1,1 или 5,5 кг</td></tr>
 </tbody></table>
       </div>
       <p class="comparison-note"><svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 11v6M12 7h.01"/></svg><span>Для работы с PUR-2R В-90 нужны оба компонента: А — 9 кг и Б — 1 кг. Комплектность поставки уточните у Ивана.</span></p>
