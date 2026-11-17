@@ -6,9 +6,16 @@ test('B90 presents both components and resets its gallery when changing product'
   const thumbnails=page.locator('#product-gallery button');
   await expect(thumbnails).toHaveCount(2);
   await thumbnails.nth(1).click();
-  await expect(page.locator('#detail-image')).toHaveAttribute('src','assets/b90-component-b.webp');
+  await expect(page.locator('#detail-image')).toHaveAttribute('src','assets/b90-component-b-cutout.png');
   await expect(thumbnails.nth(1)).toHaveAttribute('aria-pressed','true');
   await expect(page.locator('#gallery-caption')).toHaveText('Компонент Б · 1 кг');
+  for(const photo of [page.locator('#detail-image'),page.locator('#product-gallery img').nth(1)]){
+    const image=await photo.evaluate(async img=>{
+      await img.decode();const canvas=document.createElement('canvas');canvas.width=img.naturalWidth;canvas.height=img.naturalHeight;const ctx=canvas.getContext('2d');ctx.drawImage(img,0,0);
+      return {fit:getComputedStyle(img).objectFit,alpha:[[0,0],[canvas.width-1,0],[0,canvas.height-1],[canvas.width-1,canvas.height-1]].map(([x,y])=>ctx.getImageData(x,y,1,1).data[3])};
+    });
+    expect(image.alpha).toEqual([0,0,0,0]);expect(image.fit).toBe('contain');
+  }
   await page.locator('#description-sections summary').filter({hasText:'Состав'}).click();
   await expect(page.locator('#description-sections details[open]')).toContainText('полиизоцианат');
   await page.locator('[data-product="mc90"]').click();

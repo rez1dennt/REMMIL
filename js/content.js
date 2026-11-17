@@ -29,7 +29,7 @@ window.REMMIL_CONTENT = {
       short: 'Двухкомпонентный · А + Б', price: 6750,
       gallery: [
         { src: 'assets/b90.webp', label: 'Компонент А · 9 кг', alt: 'REMMIL PUR-2R В-90, компонент А, 9 кг' },
-        { src: 'assets/b90-component-b.webp', label: 'Компонент Б · 1 кг', alt: 'REMMIL PUR-2R В-90, компонент Б, 1 кг', photo: true }
+        { src: 'assets/b90-component-b-cutout.png', label: 'Компонент Б · 1 кг', alt: 'REMMIL PUR-2R В-90, компонент Б, 1 кг' }
       ],
       description: 'Двухкомпонентный полиуретановый клей для паркета и инженерной доски',
       packaging: 'А · 9 кг + Б · 1 кг', comparisonPackaging: 'А — 9 кг; Б — 1 кг', comparisonPurpose: 'Клей для паркета и инженерной доски', composition: 'Полиуретановый, 2 компонента',
